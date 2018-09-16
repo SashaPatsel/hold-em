@@ -22,6 +22,8 @@ class Round extends Component {
     const Dilsey = new Player ("Dilsey", 10)
     const Brian = new Player ("Brian", 10)
     const Baxter = new Player ("Baxter", 10)
+    this.state.players.push(Sasha, Dilsey, Brian, Baxter)
+    console.log(this.state.players)
     this.shuffle(this.state.deck)
     this.flop()
     for (var i = 0 ; i < this.state.players.length ; i ++) {
@@ -70,6 +72,8 @@ class Round extends Component {
   render () {
     return (
       <div>
+        <Player name="Sasha"/>
+        <Player name="Dilsey"/>
       </div>  
     )
   }

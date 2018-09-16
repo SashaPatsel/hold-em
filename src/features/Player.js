@@ -2,11 +2,9 @@ import React, {Component} from "react";
 
 class Player extends Component {
 
-  constructor(name, wealth) {
-    super(name) 
-      this.state = {
-        name: name,
-        wealth: wealth,
+      state = {
+        name: this.props.name,
+        wealth: this.props.wealth,
         currBet: 0,
         inPot: 0,
         fold: false,
@@ -17,13 +15,14 @@ class Player extends Component {
         smallBlind: false,
         bigBlind: false 
       }
-  }
+
+
 
 
   render() {
     return (
       <div>
-        {this.props.name}
+        {this.state.name}
       </div>  
     )
   }
