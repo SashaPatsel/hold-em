@@ -18,9 +18,7 @@ class Player extends Component {
       }
 
       componentDidMount() {
-        this.setState({
-          bigBlind: false
-        })
+        this.payBlind()
       }
 
       renderHand() {
@@ -33,14 +31,26 @@ class Player extends Component {
         )
       }
 
+      payBlind() {
+        if (this.state.smallBlind === true) {
+          this.setState({
+            wealth: this.state.wealth - .25
+          })
+        } else if (this.state.bigBlind === true) {
+          this.setState({
+            wealth: this.state.wealth - .50
+          })
+        }
+      }
+
 
   render() {
 
     return (
       <div>
-        {this.state.name}:
+        <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
-
+        Wealth: {this.state.wealth}
 
        
       </div>  

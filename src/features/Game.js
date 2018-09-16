@@ -36,7 +36,7 @@ class Game extends Component {
     bet= {false}
     raise= {false}
     call= {false}
-    dealer= {false}
+    dealer= {true}
     smallBlind= {false}
     bigBlind= {false} 
     key={this.state.keyCount}
@@ -51,7 +51,7 @@ class Game extends Component {
     raise= {false}
     call= {false}
     dealer= {false}
-    smallBlind= {false}
+    smallBlind= {true}
     bigBlind= {false} 
     key={this.state.keyCount}
     />)
@@ -66,7 +66,7 @@ class Game extends Component {
     call= {false}
     dealer= {false}
     smallBlind= {false}
-    bigBlind= {false} 
+    bigBlind= {true} 
       key={this.state.keyCount}
     />)
     this.state.keyCount++
@@ -118,7 +118,6 @@ class Game extends Component {
 
     this.setState({
       currRound: <Round
-      players={this.state.players}
       blinds= {this.state.blinds}
       />
     })
