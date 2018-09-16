@@ -80,7 +80,7 @@ class Round extends Component {
   render () {
     return (
       <div>
-        {this.state.players[0]}
+        {this.state.players.map(player => player)}
       </div>  
     )
   }
