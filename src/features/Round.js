@@ -17,17 +17,30 @@ class Round extends Component {
     this.startRound()
   }
 
-  startRound() {
-    const Sasha = new Player("Sasha", 10)
-    const Dilsey = new Player ("Dilsey", 10)
-    const Brian = new Player ("Brian", 10)
-    const Baxter = new Player ("Baxter", 10)
-    this.state.players.push(Sasha, Dilsey, Brian, Baxter)
-    console.log(this.state.players)
-    this.shuffle(this.state.deck)
-    this.flop()
-    for (var i = 0 ; i < this.state.players.length ; i ++) {
+  newPlayer() {
+    this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}/>)
+    this.state.players.push( <Player name="Dilsey" wealth={10} hand={[]}/>)
+    // this.state.players[0].state.hand.push(1)
+    console.log(this.state.players[0])
+  }
 
+  startRound() {
+    // Add the players to the game
+    this.newPlayer()
+    // Shuffle the Deck
+    this.shuffle(this.state.deck)
+    // Deal one card to each player, the. repeat
+    this.dealCard()
+    this.dealCard()
+    
+  //  Bring out the flop
+    this.flop()
+  }
+
+  dealCard() {
+    for (var i = 0 ; i < this.state.players.length ; i ++) {
+      this.state.players[i].props.hand.push(this.state.deck.pop())
+      console.log(this.state.players[i].props.hand)
     }
   }
 
@@ -38,7 +51,7 @@ class Round extends Component {
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
-    console.log(this.state.houseCards)
+
   }
 
   turnRiver() {
@@ -72,8 +85,7 @@ class Round extends Component {
   render () {
     return (
       <div>
-        <Player name="Sasha"/>
-        <Player name="Dilsey"/>
+        {this.state.players[0]}
       </div>  
     )
   }
