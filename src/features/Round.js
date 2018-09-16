@@ -8,7 +8,7 @@ class Round extends Component {
     pot: 0,
     houseCards: [],
     minBet: .5,
-    players: []
+    players: this.props.players
   }
 
   
@@ -17,26 +17,11 @@ class Round extends Component {
     this.startRound()
   }
 
-  newPlayer() {
-    this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {false}
-    bigBlind= {false} 
-    />)
-    this.state.players.push( <Player name="Dilsey" wealth={10} hand={[]}/>)
-    // this.state.players[0].state.hand.push(1)
-    console.log(this.state.players[0])
-  }
+
 
   startRound() {
-    // Add the players to the game
-    this.newPlayer()
+    
+
     // Shuffle the Deck
     this.shuffle(this.state.deck)
     // Deal one card to each player, the. repeat
