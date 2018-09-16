@@ -6,15 +6,26 @@ class Game extends Component {
   state = {
     totalStakes: 0,
     currRound: "",
-    players: []
+    players: [],
+    keyCount: 1
   }
 
   componentDidMount() {
     // Add the players to the game
+    this.state.keyCount++
+
+    // SET STATE NOT WORKING?!!?!
+    this.setState({
+      keyCount: this.state.keyCount+1
+    })
+    
+    console.log("Game",this.state)
     this.newPlayer()
     this.newRound()
+
   }
 
+  
   newPlayer() {
     this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}
     currBet= {0}
@@ -26,7 +37,9 @@ class Game extends Component {
     dealer= {false}
     smallBlind= {false}
     bigBlind= {false} 
+    key={this.state.keyCount}
     />)
+    this.state.keyCount++
 
     this.state.players.push( <Player name="Dilsey" wealth={10} hand={[]}
     currBet= {0}
@@ -38,7 +51,9 @@ class Game extends Component {
     dealer= {false}
     smallBlind= {false}
     bigBlind= {false} 
+    key={this.state.keyCount}
     />)
+    this.state.keyCount++
 
     this.state.players.push( <Player name="Brian" wealth={10} hand={[]}
     currBet= {0}
@@ -50,8 +65,9 @@ class Game extends Component {
     dealer= {false}
     smallBlind= {false}
     bigBlind= {false} 
+      key={this.state.keyCount}
     />)
-
+    this.state.keyCount++
     this.state.players.push( <Player name="Bax" wealth={10} hand={[]}
     currBet= {0}
     inPot= {0}
@@ -62,9 +78,11 @@ class Game extends Component {
     dealer= {false}
     smallBlind= {false}
     bigBlind= {false} 
+    key={this.state.keyCount}
     />)
-    console.log(this.state.players[0])
+    this.state.keyCount++
   }
+
 
   newRound() {
     this.setState({

@@ -14,7 +14,9 @@ class Round extends Component {
   
 
   componentDidMount() {
+    
     this.startRound()
+    console.log("Round",this.state)
   }
 
 
@@ -35,7 +37,6 @@ class Round extends Component {
   dealCard() {
     for (var i = 0 ; i < this.state.players.length ; i ++) {
       this.state.players[i].props.hand.push(this.state.deck.pop())
-      console.log(this.state.players[i].props.hand)
     }
   }
 
@@ -80,7 +81,11 @@ class Round extends Component {
   render () {
     return (
       <div>
+        <h3>Players:</h3>
         {this.state.players.map(player => player)}
+
+        <h3>House:</h3>
+        {this.state.houseCards.map(c =>  <p> {c.number} of {c.suit} </p> )}
       </div>  
     )
   }

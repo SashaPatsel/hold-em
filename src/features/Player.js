@@ -35,7 +35,7 @@ class Player extends Component {
 
 
   render() {
-    console.log("playa", this.state.hand)
+
     return (
       <div>
         {this.state.name}:
