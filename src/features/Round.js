@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import deck from "../data/deck.json"
+import Player from "./Player"
 
 class Round extends Component {
   state = {
@@ -17,6 +18,10 @@ class Round extends Component {
   }
 
   startRound() {
+    const Sasha = new Player("Sasha", 10)
+    const Dilsey = new Player ("Dilsey", 10)
+    const Brian = new Player ("Brian", 10)
+    const Baxter = new Player ("Baxter", 10)
     this.shuffle(this.state.deck)
     this.flop()
     for (var i = 0 ; i < this.state.players.length ; i ++) {
