@@ -18,7 +18,17 @@ class Round extends Component {
   }
 
   newPlayer() {
-    this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}/>)
+    this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}
+    currBet= {0}
+    inPot= {0}
+    fold= {false}
+    bet= {false}
+    raise= {false}
+    call= {false}
+    dealer= {false}
+    smallBlind= {false}
+    bigBlind= {false} 
+    />)
     this.state.players.push( <Player name="Dilsey" wealth={10} hand={[]}/>)
     // this.state.players[0].state.hand.push(1)
     console.log(this.state.players[0])

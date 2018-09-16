@@ -6,15 +6,15 @@ class Player extends Component {
         name: this.props.name,
         wealth: this.props.wealth,
         hand: this.props.hand,
-        currBet: 0,
-        inPot: 0,
-        fold: false,
-        bet: false,
-        raise: false,
-        call: false,
-        dealer: false,
-        smallBlind: false,
-        bigBlind: false 
+        currBet: this.props.currBet,
+        inPot: this.props.inPot,
+        fold: this.props.fold,
+        bet: this.props.bet,
+        raise: this.props.raise,
+        call: this.props.call,
+        dealer: this.props.dealer,
+        smallBlind: this.props.smallBlind,
+        bigBlind: this.props.bigBlind 
       }
 
 
