@@ -155,7 +155,7 @@
   },
   {
     "suit": "hearts",
-    "number": 14,
+    "number": 14
   },  {
     "suit": "clubs",
     "number": 2
@@ -166,7 +166,7 @@
   },
   {
     "suit": "clubs",
-    "number": 4,
+    "number": 4
   },
   {
     "suit": "clubs",
@@ -192,7 +192,6 @@
     "suit": "clubs",
     "number": 10
   },
-
   {
     "suit": "clubs",
     "number": 11
@@ -207,6 +206,6 @@
   },
   {
     "suit": "clubs",
-    "number": 14,
-  },
+    "number": 14
+  }
 ]

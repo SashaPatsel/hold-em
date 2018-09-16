@@ -1,28 +1,112 @@
-.App {
-  text-align: center;
-}
+/*
+0 - 600px: Phone
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+600px - 900px: Tablet-Portrait
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+900px - 1200 px: Tablet-Landscape
 
-.App-title {
-  font-size: 1.5em;
-}
+[1200px - 1800px]: Normal styling
 
-.App-intro {
-  font-size: large;
-}
+1800px + : Large desktop
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+Good working order: Base & Typography -> General Layout & Grid -> Page Layout -> Components
+
+*/
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px); }
+  80% {
+    transform: translateX(10px); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem); }
+  80% {
+    transform: translateX(-1rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem); }
+  100% {
+    opacity: 1;
+    transform: translate(0); } }
+
+@keyframes growFromCenter {
+  0% {
+    opacity: 0;
+    transform: scale(0.1); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+
+@keyframes spinIn {
+  0% {
+    transform: rotate(0deg) scale(0.1); }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 1; } }
+
+@-webkit-keyframes backgroundMove {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+@-moz-keyframes backgroundMove {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+@keyframes backgroundMove {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+/* Reset CSS for cross-browser compatibility */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  /* allows other elements to inherit box-sizing specified in body */
+  box-sizing: inherit; }
+
+html {
+  /* this makes it a lot easier to calcute rem. 62.5 is 10/16 so our defualt fontsize is relative to user settings. defines what 1 rem is */
+  scroll-behavior: smooth;
+  font-size: 62.5%; }
+  @media (min-width: 112.5em) {
+    html {
+      font-size: 75%; } }
+  @media (max-width: 75em) {
+    html {
+      font-size: 56.25%; } }
+  @media (max-width: 56.25em) {
+    html {
+      font-size: 45%; } }
+
+body {
+  /* makes it so that padding and width don't add to total size of element. i.e. height and width will now extend to define other parts of the box model */
+  box-sizing: border-box; }
+
+body {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-weight: 400px;
+  line-height: 1.7; }
