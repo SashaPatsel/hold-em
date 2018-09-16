@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 class Player extends Component {
   state = {
+    name: "",
     wealth: 0,
     currBet: 0,
     inPot: 0,
