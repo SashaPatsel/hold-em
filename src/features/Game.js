@@ -86,20 +86,24 @@ class Game extends Component {
   }
 
   determineBlinds() {
-    
-
     if (this.state.blinds[0] === 0) {
 
       this.newRound()
     }
     else if (this.state.blinds[2] === this.state.players.length -1) {
-
+      this.setState({
+        blinds: [this.state.blinds[0] + 1, this.state.blinds[1] + 1,0]
+      })
     } 
     else if (this.state.blinds[1] === this.state.players.length -1) {
-
+      this.setState({
+        blinds: [this.state.blinds[0] + 1, 0 ,1]
+      })
     } 
     else if (this.state.blinds[0] === this.state.players.length -1) {
-
+      this.setState({
+        blinds: [0,1,2]
+      })
     } 
     // Normal incrementer
     else {
