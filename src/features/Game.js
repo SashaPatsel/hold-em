@@ -39,7 +39,30 @@ class Game extends Component {
     smallBlind= {false}
     bigBlind= {false} 
     />)
-    // this.state.players[0].state.hand.push(1)
+
+    this.state.players.push( <Player name="Brian" wealth={10} hand={[]}
+    currBet= {0}
+    inPot= {0}
+    fold= {false}
+    bet= {false}
+    raise= {false}
+    call= {false}
+    dealer= {false}
+    smallBlind= {false}
+    bigBlind= {false} 
+    />)
+
+    this.state.players.push( <Player name="Bax" wealth={10} hand={[]}
+    currBet= {0}
+    inPot= {0}
+    fold= {false}
+    bet= {false}
+    raise= {false}
+    call= {false}
+    dealer= {false}
+    smallBlind= {false}
+    bigBlind= {false} 
+    />)
     console.log(this.state.players[0])
   }
 
