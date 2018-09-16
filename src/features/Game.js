@@ -3,10 +3,14 @@ import deck from "../data/deck.json"
 
 class Game extends Component {
   state = {
-    deck: deck
+    deck: deck,
+    minBet: .5
   }
 
   componentDidMount() {
+    this.shuffle(this.state.deck)
+    this.state.deck.pop()
+    console.log(this.state.deck.pop())
     console.log(this.state.deck)
   }
 
