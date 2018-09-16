@@ -10,7 +10,8 @@ class Round extends Component {
     minBet: .5,
     players: this.props.players,
     // array of indices [D, SB, BB]
-    blinds: this.props.blinds
+    blinds: this.props.blinds,
+    turnQueue: 0
   }
 
   
@@ -31,10 +32,29 @@ class Round extends Component {
     this.dealCard()
     this.dealCard()
     
+    // Promise not working
+    // this.whosTurn().then(console.log(this.state.turnQueue))
+    
+    // Start first round of betting
+    const wait = setTimeout(() => {
+      console.log(this.state.turnQueue)
+    },0)
+
   //  Bring out the flop
     this.flop()
   }
 
+  // Async not working... Still using setTimeout
+  async whosTurn() {
+    // return Promise.resolve(this.setState({
+    //   turnQueue: 908
+    // }))
+    if (this.state.turnQueue === this.state.players.length -1) {
+      (this.setState({
+          turnQueue: 0
+        }))
+    }
+  }
 
   dealCard() {
     for (var i = 0 ; i < this.state.players.length ; i ++) {
@@ -83,6 +103,9 @@ class Round extends Component {
   render () {
     return (
       <div>
+      <h3>Pot:</h3>
+
+        {this.state.pot}
         <h3>Players:</h3>
         {this.state.players.map(player => player)}
 
