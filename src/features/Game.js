@@ -7,7 +7,8 @@ class Game extends Component {
     totalStakes: 0,
     currRound: "",
     players: [],
-    keyCount: 1
+    keyCount: 1,
+    blinds: [0,1,2]
   }
 
   componentDidMount() {
@@ -21,7 +22,8 @@ class Game extends Component {
     
     console.log("Game",this.state)
     this.newPlayer()
-    this.newRound()
+    // New Round is called after blinds are determined
+    this.determineBlinds()
 
   }
 
@@ -83,11 +85,37 @@ class Game extends Component {
     this.state.keyCount++
   }
 
+  determineBlinds() {
+    
+
+    if (this.state.blinds[0] === 0) {
+
+      this.newRound()
+    }
+    else if (this.state.blinds[2] === this.state.players.length -1) {
+
+    } 
+    else if (this.state.blinds[1] === this.state.players.length -1) {
+
+    } 
+    else if (this.state.blinds[0] === this.state.players.length -1) {
+
+    } 
+    // Normal incrementer
+    else {
+      this.setState({
+        blinds: [this.state.blinds[0] + 1, this.state.blinds[1] + 1,this.state.blinds[2] + 1]
+      })
+    }
+
+  }
 
   newRound() {
+
     this.setState({
       currRound: <Round
       players={this.state.players}
+      blinds= {this.state.blinds}
       />
     })
   
@@ -95,6 +123,7 @@ class Game extends Component {
   
 
   render () {
+
     return (
       <div>
         {this.state.currRound}

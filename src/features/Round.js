@@ -8,7 +8,9 @@ class Round extends Component {
     pot: 0,
     houseCards: [],
     minBet: .5,
-    players: this.props.players
+    players: this.props.players,
+    // array of indices [D, SB, BB]
+    blinds: this.props.blinds
   }
 
   
@@ -23,16 +25,16 @@ class Round extends Component {
 
   startRound() {
     
-
     // Shuffle the Deck
     this.shuffle(this.state.deck)
-    // Deal one card to each player, the. repeat
+    // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
     
   //  Bring out the flop
     this.flop()
   }
+
 
   dealCard() {
     for (var i = 0 ; i < this.state.players.length ; i ++) {
