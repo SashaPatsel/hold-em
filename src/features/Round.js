@@ -32,6 +32,8 @@ class Round extends Component {
     // Move read-only player stats to Round state so that they can be changed
     this.newPlayers()
 
+    // Add blinds
+    this.addBlinds()
     // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
@@ -126,6 +128,12 @@ class Round extends Component {
     key={this.state.keyCount}
     />)
     this.state.keyCount++
+  }
+
+  addBlinds() {
+    this.setState({
+      pot: this.state.minBet + (this.state.minBet * 2)
+    })
   }
 
 
