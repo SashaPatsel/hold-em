@@ -14,7 +14,8 @@ class Player extends Component {
         call: this.props.call,
         dealer: this.props.dealer,
         smallBlind: this.props.smallBlind,
-        bigBlind: this.props.bigBlind 
+        bigBlind: this.props.bigBlind,
+        isTurn: this.props.isTurn 
       }
 
       componentDidMount() {

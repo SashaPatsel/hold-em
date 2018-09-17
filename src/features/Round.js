@@ -40,6 +40,7 @@ class Round extends Component {
 
     // Promise not working
     // this.whosTurn().then(console.log(this.state.turnQueue))
+    this.whosTurn()
 
     // Start first round of betting
     const wait = setTimeout(() => {
@@ -84,6 +85,7 @@ class Round extends Component {
     dealer= {true}
     smallBlind= {false}
     bigBlind= {false} 
+    isTurn={false}
     key={this.state.keyCount}
     />)
     this.state.keyCount++
@@ -98,6 +100,7 @@ class Round extends Component {
     dealer= {false}
     smallBlind= {true}
     bigBlind= {false} 
+    isTurn={false}
     key={this.state.keyCount}
     />)
     this.state.keyCount++
@@ -112,6 +115,7 @@ class Round extends Component {
     dealer= {false}
     smallBlind= {false}
     bigBlind= {true} 
+    isTurn={false}
       key={this.state.keyCount}
     />)
     this.state.keyCount++
@@ -125,12 +129,14 @@ class Round extends Component {
     dealer= {false}
     smallBlind= {false}
     bigBlind= {false} 
+    isTurn={false}
     key={this.state.keyCount}
     />)
     this.state.keyCount++
   }
 
   addBlinds() {
+    // Add small blind + big blind
     this.setState({
       pot: this.state.minBet + (this.state.minBet * 2)
     })
@@ -142,11 +148,12 @@ class Round extends Component {
     // return Promise.resolve(this.setState({
     //   turnQueue: 908
     // }))
-    if (this.state.turnQueue === this.state.players.length - 1) {
-      (this.setState({
-        turnQueue: 0
-      }))
+  for (let i = 0 ; i < this.state.players.length ; i++) {
+    if (this.state.players[i].bigBlind === true) {
+      // Player to left of bigBlind bets
+      this.state.players[i+1]
     }
+  }
   }
 
   dealCard() {
