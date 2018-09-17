@@ -52,7 +52,7 @@ class Round extends Component {
 
 
 
-  componentDidMount() {
+  componentWillMount() {
 
     this.startRound()
     console.log("Round", this.state)
