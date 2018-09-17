@@ -38,19 +38,19 @@
 
   {
     "suit": "diamonds",
-    "number": 11
+    "number": "Jack"
   },
   {
     "suit": "diamonds",
-    "number": 12
+    "number": "Queen"
   },
   {
     "suit": "diamonds",
-    "number": 13
+    "number": "King"
   },
   {
     "suit": "diamonds",
-    "number": 14
+    "number": "Ace"
   },  
   {
     "suit": "spades",
@@ -91,19 +91,19 @@
 
   {
     "suit": "spades",
-    "number": 11
+    "number": "Jack"
   },
   {
     "suit": "spades",
-    "number": 12
+    "number": "Queen"
   },
   {
     "suit": "spades",
-    "number": 13
+    "number": "King"
   },
   {
     "suit": "spades",
-    "number": 14
+    "number": "Ace"
   },  {
     "suit": "hearts",
     "number": 2
@@ -143,19 +143,19 @@
 
   {
     "suit": "hearts",
-    "number": 11
+    "number": "Jack"
   },
   {
     "suit": "hearts",
-    "number": 12
+    "number": "Queen"
   },
   {
     "suit": "hearts",
-    "number": 13
+    "number": "King"
   },
   {
     "suit": "hearts",
-    "number": 14
+    "number": "Ace"
   },  {
     "suit": "clubs",
     "number": 2
@@ -194,18 +194,18 @@
   },
   {
     "suit": "clubs",
-    "number": 11
+    "number": "Jack"
   },
   {
     "suit": "clubs",
-    "number": 12
+    "number": "Queen"
   },
   {
     "suit": "clubs",
-    "number": 13
+    "number": "King"
   },
   {
     "suit": "clubs",
-    "number": 14
+    "number": "Ace"
   }
 ]

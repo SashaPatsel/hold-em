@@ -22,8 +22,15 @@ class Player extends Component {
       }
 
       renderHand() {
+        // switch 
         return (
+          
           <div>
+
+  
+      
+
+
           {this.state.hand[0].number} of {this.state.hand[0].suit}
           &nbsp; and &nbsp;
           {this.state.hand[1].number} of {this.state.hand[1].suit}

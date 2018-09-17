@@ -32,9 +32,6 @@ class Round extends Component {
     // Move read-only player stats to Round state so that they can be changed
     this.newPlayers()
 
-    // Get the blinds
-    // this.payBlinds()
-
     // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
@@ -131,15 +128,6 @@ class Round extends Component {
     this.state.keyCount++
   }
 
-  payBlinds() {
-    for (let i = 0 ; i < this.state.players.length ; i++) {
-      if (this.state.players[i].props.bigBlind === true) {
-        console.log(this.state.players[i].props.wealth-(this.state.minBet*2))
-
-        this.state.players[i].props.wealth = this.state.players[i].props.wealth-(this.state.minBet*2)
-      }
-    }
-  }
 
   // Async not working... Still using setTimeout
   async whosTurn() {
@@ -182,7 +170,7 @@ class Round extends Component {
       <div>
         <h3>Pot:</h3>
         {this.state.pot}
-        
+
         <h3>Players:</h3>
         {this.state.players.map(player => player )}
 
