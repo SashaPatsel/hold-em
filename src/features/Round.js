@@ -2,6 +2,42 @@ import React, { Component } from "react";
 import deck from "../data/deck.json"
 import Player from "./Player"
 
+const players = [
+  {
+    name: "Sasha",
+    wealth: 10,
+    dealer: true,
+    smallBlind: false,
+    bigBlind: false,
+    key: 1
+  },
+  {
+    name: "Dilsey",
+    wealth: 10,
+    dealer: false,
+    smallBlind: true,
+    bigBlind: false,
+    key: 2
+  },
+  {
+    name: "Brian",
+    wealth: 10,
+    dealer: false,
+    smallBlind: false,
+    bigBlind: true,
+    key: 3
+  },
+  {
+    name: "Bax",
+    wealth: 10,
+    dealer: false,
+    smallBlind: false,
+    bigBlind: false,
+    key: 4
+  },
+]
+
+
 class Round extends Component {
   state = {
     deck: deck,
@@ -30,13 +66,13 @@ class Round extends Component {
     this.shuffle(this.state.deck)
 
     // Move read-only player stats to Round state so that they can be changed
-    this.newPlayers()
+    // this.newPlayers()
 
     // Add blinds
     this.addBlinds()
     // Deal one card to each player, then repeat
-    this.dealCard()
-    this.dealCard()
+    // this.dealCard()
+    // this.dealCard()
 
     // Promise not working
     // this.whosTurn().then(console.log(this.state.turnQueue))
@@ -144,16 +180,22 @@ class Round extends Component {
 
 
   // Async not working... Still using setTimeout
-  async whosTurn() {
+ whosTurn() {
+   
     // return Promise.resolve(this.setState({
     //   turnQueue: 908
     // }))
   for (let i = 0 ; i < this.state.players.length ; i++) {
     if (this.state.players[i].bigBlind === true) {
       // Player to left of bigBlind bets
-      this.state.players[i+1]
+      this.state.players[i+1].isTurn = true
     }
   }
+  var hk = setTimeout(() => {
+    console.log(this.state.players)
+  },10)
+  
+
   }
 
   dealCard() {
@@ -187,7 +229,24 @@ class Round extends Component {
         {this.state.pot}
 
         <h3>Players:</h3>
-        {this.state.players.map(player => player )}
+        {players.map(player => 
+      <Player 
+      name= {player.name}
+      wealth={player.wealth} 
+      hand={[this.state.deck.pop(),this.state.deck.pop()]}
+      currBet= {0}
+      inPot= {0}
+      fold= {false}
+      bet= {false}
+      raise= {false}
+      call= {false}
+      dealer= {true}
+      smallBlind= {false}
+      bigBlind= {false} 
+      isTurn={false}
+      key={player.key}
+      />  
+      )}
 
         <h3>House:</h3>
         {this.state.houseCards.map(c => <p> {c.number} of {c.suit} </p>)}
