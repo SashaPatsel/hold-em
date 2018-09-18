@@ -18,6 +18,10 @@ class Player extends Component {
         bigBlind: this.props.bigBlind,
         isTurn: this.props.isTurn 
       }
+      // Create array of players. State can mange the player him/herself, constructor can manage ineractions w/ round
+      constructor() {
+        this.
+      }
 
       componentDidMount() {
         this.payBlind()
@@ -47,6 +51,20 @@ class Player extends Component {
         }
       }
 
+      fold() {
+        this.setState({
+          fold: true
+        })
+      }
+
+      call() {
+        
+      }
+
+      raise() {
+
+      }
+
 
   render() {
 
@@ -55,9 +73,9 @@ class Player extends Component {
         <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}
-        <Button click={this.props.fold} text="Fold"/>
-        <Button click={this.props.call} text="Call"/>
-        <Button click={this.props.raise} text="Raise"/>
+        <Button click={this.fold} text="Fold"/>
+        <Button click={this.call} text="Call"/>
+        <Button click={this.raise} text="Raise"/>
        
       </div>  
     )

@@ -245,6 +245,7 @@ class Round extends Component {
       bigBlind= {player.bigBlind} 
       isTurn={false}
       key={player.key}
+      
       />  
       )}
 
