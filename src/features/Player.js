@@ -66,7 +66,8 @@ class Player extends Component {
   render() {
 
     return (
-      <div>
+      <div className="player">
+        
         <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}

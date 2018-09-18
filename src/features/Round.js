@@ -37,12 +37,13 @@ class Round extends Component {
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,
     action: 0,
+
   }
 
 
 
   componentWillMount() {
-
+    this.fold = this.fold.bind(this)
     this.startRound()
     console.log("Round", this.state)
   }
@@ -119,10 +120,21 @@ class Round extends Component {
 
 
  whosTurn() {
-   
 
+
+  }
+
+  moveAction() {
+    if (this.state.action === this.state.players.length - 1) {
+      this.setState({
+        action: 0
+      })
+    }else {
+      this.setState({
+        action: this.state.action + 1
+      })
+    }
   
-
   }
 
   dealCard() {
@@ -131,10 +143,10 @@ class Round extends Component {
     }
   }
 
+  
+
   fold() {
-    this.setState({
-      action: this.state.action + 1
-    })
+    this.moveAction()
   }
 
   flop() {
@@ -158,6 +170,7 @@ class Round extends Component {
   render() {
     return (
       <div>
+        {this.state.action}
         <h3>Pot:</h3>
         {this.state.pot}
 
