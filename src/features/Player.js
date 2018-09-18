@@ -13,11 +13,13 @@ class Player extends Component {
     smallBlind: this.props.smallBlind,
     bigBlind: this.props.bigBlind,
 
+
   }
 
 
       componentDidMount() {
         this.payBlind()
+
       }
 
       renderHand() {
@@ -51,11 +53,11 @@ class Player extends Component {
       }
     
       call() {
-        this.props.call
+        console.log("call",this.props.currBet)
       }
     
       raise() {
-        this.props.raise
+        console.log("raise",this.props.currBet)
       }
 
 
@@ -68,8 +70,8 @@ class Player extends Component {
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}
         <Button click={this.props.fold} text="Fold"/>
-        <Button click={this.call} text="Call"/>
-        <Button click={this.raise} text="Raise"/>
+        <Button click={() => this.call()} text="Call"/>
+        <Button click={() => this.raise()} text="Raise"/>
        </div>
       </div>  
     )

@@ -53,6 +53,7 @@ class Round extends Component {
     // array of indices [D, SB, BB]]
     dealer: this.props.dealer,
     action: 1,
+    currBet: 0,
     1: "player__waiting",
     2: "player__waiting",
     3: "player__waiting",
@@ -184,11 +185,13 @@ class Round extends Component {
   moveAction() {
     if (this.state.action === this.state.players.length) {
       this.setState({
-        action: 1
+        action: 1,
+        currBet: this.state.currBet + 1
       })
     }else {
       this.setState({
-        action: this.state.action + 1
+        action: this.state.action + 1,
+        currBet: this.state.currBet + 1
       })
     }
     this.whosTurn()
@@ -250,8 +253,8 @@ class Round extends Component {
           dealer={player.dealer}
           smallBlind={player.smallBlind}
           bigBlind={player.bigBlind}
-
-          fold={this.fold.bind(this, player.key)}
+          currBet={this.state.currBet}
+          fold={() => this.fold(player.key)}
           action={this.state[player.key]}
           />
         )}
