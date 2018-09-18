@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import Button from "../components/Button"
 
 class Player extends Component {
-constructor(name, wealth) {
-  super()
-  this.state = {
-    name: name,
-    wealth: wealth,
-    hand: []
+
+  state =  {
+    name: this.props.name,
+    wealth: this.props.wealth,
+    hand: [],
+    key: this.props.key
     // currBet: currBet,
     // inPot: inPot,
     // fold: fold,
@@ -19,19 +19,11 @@ constructor(name, wealth) {
     // bigBlind: bigBlind,
     // isTurn: isTurn 
   }
+
+
+inhurr() {
+  console.log("hkgjhffgu")
 }
-
-      // Create array of players. State can mange the player him/herself, constructor can manage ineractions w/ round
-      // constructor(chicken, bacon, farley) {
-      //   super()
-      //   this.name= chicken
-      //   this.bet = bacon
-      //   this.farley = farley
-      // }
-
-      inhurr() {
-        console.log("im in dis bitch")
-      }
 
       componentDidMount() {
         this.payBlind()
@@ -59,20 +51,6 @@ constructor(name, wealth) {
             wealth: this.state.wealth - .50
           })
         }
-      }
-
-      fold() {
-        this.setState({
-          fold: true
-        })
-      }
-
-      call() {
-        
-      }
-
-      raise() {
-
       }
 
 

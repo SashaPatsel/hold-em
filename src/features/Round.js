@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import deck from "../data/deck.json"
 import Player from "./Player"
+import PlayerLogic from "./PlayerLogic"
 
 const players = [
   {
@@ -33,7 +34,6 @@ class Round extends Component {
     houseCards: [],
     minBet: .25,
     players: [],
-    playas: [],
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,
     turnQueue: 0,
@@ -71,8 +71,7 @@ class Round extends Component {
     const wait = setTimeout(() => {
       console.log(this.state.turnQueue)
       console.log(this.state.players)
-      console.log(this.state.playas)
-      this.state.playas[0].inhurr()
+
     }, 0)
 
     //  Bring out the flop
@@ -105,27 +104,9 @@ class Round extends Component {
 
   newPlayers() {
 
-    // for (let i = 0 ; i < players.length ; i++) {
-    //   this.state.players.push( <Player 
-    //   name={players[i].name} 
-    //   wealth={10} 
-    //   hand={[]}
-    //   currBet= {0}
-    //   inPot= {0}
-    //   fold= {false}
-    //   bet= {false}
-    //   raise= {false}
-    //   call= {false}
-    //   dealer= {true}
-    //   smallBlind={false}
-    //   bigBlind= {false} 
-    //   isTurn={false}
-    //   key={players[i].key}
-    //   />)
-    // }
-
     for (let i = 0 ; i < players.length ; i++) {
-      this.state.playas.push(new Player(players[i].name, 10))
+      this.state.players.push(new PlayerLogic(players[i].name, players[i].wealth, players[i].key
+      ))
     }
 
   }
@@ -188,26 +169,15 @@ class Round extends Component {
         {this.state.pot}
 
         <h3>Players:</h3>
-        {/* {players.map(player => 
-      <Player 
-      name= {player.name}
-      wealth={player.wealth} 
-      hand={[this.state.deck.pop(),this.state.deck.pop()]}
-      currBet= {0}
-      inPot= {0}
-      fold= {false}
-      bet= {false}
-      raise= {false}
-      call= {false}
-      dealer= {player.dealer}
-      smallBlind= {player.smallBlind}
-      bigBlind= {player.bigBlind} 
-      isTurn={false}
-      key={player.key}
-      
-      />  
-      )} */}
+        {this.state.players.map(player => 
 
+          <Player
+          name={player.name} 
+          wealth={player.wealth} 
+          key={player.key} 
+          />
+        )}
+{/* <Player/> */}
         <h3>House:</h3>
         {this.state.houseCards.map(c => <p> {c.number} of {c.suit} </p>)}
       </div>
