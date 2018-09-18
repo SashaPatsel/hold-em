@@ -182,8 +182,9 @@ const async = setTimeout(() => {
 
   
 
-  fold() {
-    this.moveAction()
+  fold(arg) {
+    console.log(this, arg)
+    // this.moveAction()
   }
 
   flop() {
@@ -221,7 +222,7 @@ const async = setTimeout(() => {
           hand={player.hand}
           key={player.key} 
 
-          fold={this.fold}
+          fold={this.fold.bind(this, player.key)}
           action={this.state[player.key]}
           />
         )}
