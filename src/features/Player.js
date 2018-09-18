@@ -21,10 +21,6 @@ class Player extends Component {
   }
 
 
-inhurr() {
-  console.log("hkgjhffgu")
-}
-
       componentDidMount() {
         this.payBlind()
       }
@@ -53,6 +49,19 @@ inhurr() {
         }
       }
 
+      fold() {
+        // props.fold
+        
+      }
+    
+      call() {
+        this.props.call
+      }
+    
+      raise() {
+        this.props.raise
+      }
+
 
   render() {
 
@@ -61,7 +70,7 @@ inhurr() {
         <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}
-        <Button click={this.fold} text="Fold"/>
+        <Button click={this.props.fold} text="Fold"/>
         <Button click={this.call} text="Call"/>
         <Button click={this.raise} text="Raise"/>
        

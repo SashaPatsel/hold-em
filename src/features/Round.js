@@ -36,7 +36,7 @@ class Round extends Component {
     players: [],
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,
-    turnQueue: 0,
+    action: 0,
   }
 
 
@@ -63,8 +63,6 @@ class Round extends Component {
     this.dealCard()
     this.dealCard()
 
-    // Promise not working
-    // this.whosTurn().then(console.log(this.state.turnQueue))
     this.whosTurn()
 
     // Start first round of betting
@@ -176,6 +174,8 @@ class Round extends Component {
           wealth={player.wealth} 
           hand={player.hand}
           key={player.key} 
+
+          fold={player.fold}
           />
         )}
 {/* <Player/> */}
