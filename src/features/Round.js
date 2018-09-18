@@ -7,6 +7,7 @@ const players = [
   {
     name: "Sasha",
     wealth: 10,
+    hand: [],
     dealer: true,
     smallBlind: false,
     bigBlind: false,
@@ -15,6 +16,7 @@ const players = [
   {
     name: "Dilsey",
     wealth: 10,
+    hand: [],
     dealer: false,
     smallBlind: true,
     bigBlind: false,
@@ -23,6 +25,7 @@ const players = [
   {
     name: "Brian",
     wealth: 10,
+    hand: [],
     dealer: false,
     smallBlind: false,
     bigBlind: true,
@@ -31,6 +34,7 @@ const players = [
   {
     name: "Bax",
     wealth: 10,
+    hand: [],
     dealer: false,
     smallBlind: false,
     bigBlind: false,
@@ -127,8 +131,9 @@ class Round extends Component {
   newPlayers() {
 
     for (let i = 0 ; i < players.length ; i++) {
-      this.state.players.push(new PlayerLogic(players[i].name, players[i].wealth, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].key
-      ))
+      // this.state.players.push(new PlayerLogic(players[i].name, players[i].wealth, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].key
+      // ))
+      this.state.players.push(players[i])
     }
 
   }
