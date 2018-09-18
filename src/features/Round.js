@@ -181,16 +181,14 @@ class Round extends Component {
 
   
 
-  fold(arg) {
-    const async = setTimeout(() => {
-      if (arg === this.state.action) {
-          this.moveAction()
-      } else {
-        console.log("It ain't yo turn")
-      }
+  async fold(arg) {
+    
+    if (arg === this.state.action) {
+        this.moveAction()
+    } else {
+      console.log("It ain't yo turn")
+    }
      
-    }, 0)
-
   }
 
   flop() {
