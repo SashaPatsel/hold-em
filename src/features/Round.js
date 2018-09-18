@@ -60,8 +60,8 @@ class Round extends Component {
     // Add blinds
     this.addBlinds()
     // Deal one card to each player, then repeat
-    // this.dealCard()
-    // this.dealCard()
+    this.dealCard()
+    this.dealCard()
 
     // Promise not working
     // this.whosTurn().then(console.log(this.state.turnQueue))
@@ -140,7 +140,7 @@ class Round extends Component {
 
   dealCard() {
     for (let i = 0; i < this.state.players.length; i++) {
-      this.state.players[i].props.hand.push(this.state.deck.pop())
+      this.state.players[i].hand.push(this.state.deck.pop())
     }
   }
 
@@ -174,6 +174,7 @@ class Round extends Component {
           <Player
           name={player.name} 
           wealth={player.wealth} 
+          hand={player.hand}
           key={player.key} 
           />
         )}

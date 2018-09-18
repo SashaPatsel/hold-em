@@ -6,7 +6,7 @@ class Player extends Component {
   state =  {
     name: this.props.name,
     wealth: this.props.wealth,
-    hand: [],
+    hand: this.props.hand,
     key: this.props.key
     // currBet: currBet,
     // inPot: inPot,
