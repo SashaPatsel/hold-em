@@ -32,7 +32,7 @@ class Round extends Component {
     deck: deck,
     pot: 0,
     houseCards: [],
-    minBet: .25,
+    minBet: .10,
     players: [],
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,

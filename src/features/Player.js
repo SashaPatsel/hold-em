@@ -31,11 +31,11 @@ class Player extends Component {
       payBlind() {
         if (this.state.smallBlind === true) {
           this.setState({
-            wealth: this.state.wealth - .25
+            wealth: this.state.wealth - .10
           })
         } else if (this.state.bigBlind === true) {
           this.setState({
-            wealth: this.state.wealth - .50
+            wealth: this.state.wealth - .20
           })
         }
       }
