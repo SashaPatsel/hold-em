@@ -130,9 +130,9 @@ class Round extends Component {
 
 
 
- whosTurn() {
-const async = setTimeout(() => {
-  this.setState({
+ async whosTurn() {
+
+  await this.setState({
     1: "player__waiting",
     2: "player__waiting",
     3: "player__waiting",
@@ -146,18 +146,17 @@ const async = setTimeout(() => {
     11: "player__waiting",
     12: "player__waiting"
   })
-  console.log("ey")
-  for (var i = 0 ; i < players.length ; i++) {
-    if (this.state.action === players[i].key) {
-      this.setState({
-        [players[i].key]: "player__action"
-      })
-      console.log("key",players[i].key)
-      console.log("action",this.state.action)
-    }
-  }
 
-},0)
+    for (var i = 0 ; i < players.length ; i++) {
+      if (this.state.action === players[i].key) {
+        this.setState({
+          [players[i].key]: "player__action"
+        })
+        console.log("key",players[i].key)
+        console.log("action",this.state.action)
+      }
+    }
+
 
   }
 
