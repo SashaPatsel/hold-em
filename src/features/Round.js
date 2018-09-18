@@ -73,7 +73,7 @@ class Round extends Component {
     }, 0)
 
     //  Bring out the flop
-    this.flop()
+    // this.flop()
     
   }
 
@@ -117,21 +117,10 @@ class Round extends Component {
   }
 
 
-  // Async not working... Still using setTimeout
+
  whosTurn() {
    
-    // return Promise.resolve(this.setState({
-    //   turnQueue: 908
-    // }))
-  for (let i = 0 ; i < this.state.players.length ; i++) {
-    if (this.state.players[i].bigBlind === true) {
-      // Player to left of bigBlind bets
-      this.state.players[i+1].isTurn = true
-    }
-  }
-  var hk = setTimeout(() => {
-    console.log(this.state.players)
-  },10)
+
   
 
   }
@@ -140,6 +129,12 @@ class Round extends Component {
     for (let i = 0; i < this.state.players.length; i++) {
       this.state.players[i].hand.push(this.state.deck.pop())
     }
+  }
+
+  fold() {
+    this.setState({
+      action: this.state.action + 1
+    })
   }
 
   flop() {
@@ -175,7 +170,7 @@ class Round extends Component {
           hand={player.hand}
           key={player.key} 
 
-          fold={player.fold}
+          fold={this.fold}
           />
         )}
 {/* <Player/> */}

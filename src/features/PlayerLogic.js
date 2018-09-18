@@ -16,6 +16,7 @@ class PlayerLogic {
     //   fold: true
     // })
     console.log(this.key)
+    this.wealth--
   }
 
   call() {
