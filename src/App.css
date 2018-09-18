@@ -111,5 +111,5 @@ body {
   font-weight: 400px;
   line-height: 1.7; }
 
-.player__waiting {
-  background-color: red; }
+.player__action {
+  background-color: orangered; }

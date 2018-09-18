@@ -1,6 +1,11 @@
 .player {
   
+
+  &__action {
+    background-color: orangered;
+  }
+
   &__waiting {
-    background-color: red;
+
   }
 }
