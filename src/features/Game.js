@@ -118,7 +118,6 @@ class Game extends Component {
 
     this.setState({
       currRound: <Round
-      blinds= {this.state.blinds}
       />
     })
   

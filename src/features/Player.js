@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Button from "../components/Button"
 
 class Player extends Component {
 
@@ -27,11 +28,6 @@ class Player extends Component {
         return (
           
           <div>
-
-  
-      
-
-
           {this.state.hand[0].number} of {this.state.hand[0].suit}
           &nbsp; and &nbsp;
           {this.state.hand[1].number} of {this.state.hand[1].suit}
@@ -59,7 +55,9 @@ class Player extends Component {
         <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}
-
+        <Button click={this.props.fold} text="Fold"/>
+        <Button click={this.props.call} text="Call"/>
+        <Button click={this.props.raise} text="Raise"/>
        
       </div>  
     )

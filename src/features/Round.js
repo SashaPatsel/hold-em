@@ -17,7 +17,7 @@ const players = [
     dealer: false,
     smallBlind: true,
     bigBlind: false,
-    key: 2
+    key: 2 
   },
   {
     name: "Brian",
@@ -119,7 +119,7 @@ class Round extends Component {
     raise= {false}
     call= {false}
     dealer= {true}
-    smallBlind= {false}
+    smallBlind={false}
     bigBlind= {false} 
     isTurn={false}
     key={this.state.keyCount}
@@ -240,9 +240,9 @@ class Round extends Component {
       bet= {false}
       raise= {false}
       call= {false}
-      dealer= {true}
-      smallBlind= {false}
-      bigBlind= {false} 
+      dealer= {player.dealer}
+      smallBlind= {player.smallBlind}
+      bigBlind= {player.bigBlind} 
       isTurn={false}
       key={player.key}
       />  
