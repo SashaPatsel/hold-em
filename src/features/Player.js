@@ -7,7 +7,11 @@ class Player extends Component {
     name: this.props.name,
     wealth: this.props.wealth,
     hand: this.props.hand,
-    key: this.props.key
+    key: this.props.key,
+    minBet: this.props.minBet,
+    dealer: this.props.dealer,
+    smallBlind: this.props.smallBlind,
+    bigBlind: this.props.bigBlind,
 
   }
 
@@ -29,6 +33,7 @@ class Player extends Component {
       }
 
       payBlind() {
+        console.log(this.state.name, this.state.smallBlind)
         if (this.state.smallBlind === true) {
           this.setState({
             wealth: this.state.wealth - .10
@@ -41,8 +46,8 @@ class Player extends Component {
       }
 
       fold() {
-        // props.fold
         
+    
       }
     
       call() {

@@ -7,21 +7,33 @@ const players = [
   {
     name: "Sasha",
     wealth: 10,
+    dealer: true,
+    smallBlind: false,
+    bigBlind: false,
     key: 1
   },
   {
     name: "Dilsey",
     wealth: 10,
+    dealer: false,
+    smallBlind: true,
+    bigBlind: false,
     key: 2 
   },
   {
     name: "Brian",
     wealth: 10,
+    dealer: false,
+    smallBlind: false,
+    bigBlind: true,
     key: 3
   },
   {
     name: "Bax",
     wealth: 10,
+    dealer: false,
+    smallBlind: false,
+    bigBlind: false,
     key: 4
   },
 ]
@@ -32,7 +44,7 @@ class Round extends Component {
     deck: deck,
     pot: 0,
     houseCards: [],
-    minBet: .10,
+    minBet: .1,
     players: [],
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,
@@ -115,7 +127,7 @@ class Round extends Component {
   newPlayers() {
 
     for (let i = 0 ; i < players.length ; i++) {
-      this.state.players.push(new PlayerLogic(players[i].name, players[i].wealth, players[i].key
+      this.state.players.push(new PlayerLogic(players[i].name, players[i].wealth, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].key
       ))
     }
 
@@ -124,7 +136,7 @@ class Round extends Component {
   addBlinds() {
     // Add small blind + big blind
     this.setState({
-      pot: this.state.minBet + (this.state.minBet * 2)
+      pot: ((this.state.minBet + this.state.minBet * 2).toFixed(2))
     })
   }
 
@@ -225,6 +237,10 @@ class Round extends Component {
           wealth={player.wealth} 
           hand={player.hand}
           key={player.key} 
+          minBet={this.state.minBet}
+          dealer={player.dealer}
+          smallBlind={player.smallBlind}
+          bigBlind={player.bigBlind}
 
           fold={this.fold.bind(this, player.key)}
           action={this.state[player.key]}
