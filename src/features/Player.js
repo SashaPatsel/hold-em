@@ -36,11 +36,11 @@ class Player extends Component {
         console.log(this.state.name, this.state.smallBlind)
         if (this.state.smallBlind === true) {
           this.setState({
-            wealth: this.state.wealth - .10
+            wealth: this.state.wealth - this.state.minBet
           })
         } else if (this.state.bigBlind === true) {
           this.setState({
-            wealth: this.state.wealth - .20
+            wealth: this.state.wealth - this.state.minBet * 2
           })
         }
       }

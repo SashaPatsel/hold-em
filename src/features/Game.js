@@ -117,7 +117,7 @@ class Game extends Component {
   newRound() {
 
     this.setState({
-      currRound: <Round
+      currRound: <Round dealer={1}
       />
     })
   

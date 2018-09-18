@@ -51,7 +51,7 @@ class Round extends Component {
     minBet: .1,
     players: [],
     // array of indices [D, SB, BB]]
-    blinds: this.props.blinds,
+    dealer: this.props.dealer,
     action: 1,
     1: "player__waiting",
     2: "player__waiting",
@@ -72,8 +72,12 @@ class Round extends Component {
 
   componentWillMount() {
     this.fold = this.fold.bind(this)
+    this.setState({
+      action: this.state.dealer + 3
+    })
     this.startRound()
     console.log("Round", this.state)
+    
   }
 
 
