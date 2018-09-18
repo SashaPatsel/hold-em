@@ -6,33 +6,21 @@ const players = [
   {
     name: "Sasha",
     wealth: 10,
-    dealer: true,
-    smallBlind: false,
-    bigBlind: false,
     key: 1
   },
   {
     name: "Dilsey",
     wealth: 10,
-    dealer: false,
-    smallBlind: true,
-    bigBlind: false,
     key: 2 
   },
   {
     name: "Brian",
     wealth: 10,
-    dealer: false,
-    smallBlind: false,
-    bigBlind: true,
     key: 3
   },
   {
     name: "Bax",
     wealth: 10,
-    dealer: false,
-    smallBlind: false,
-    bigBlind: false,
     key: 4
   },
 ]
@@ -45,6 +33,7 @@ class Round extends Component {
     houseCards: [],
     minBet: .25,
     players: [],
+    playas: [],
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,
     turnQueue: 0,
@@ -66,7 +55,7 @@ class Round extends Component {
     this.shuffle(this.state.deck)
 
     // Move read-only player stats to Round state so that they can be changed
-    // this.newPlayers()
+    this.newPlayers()
 
     // Add blinds
     this.addBlinds()
@@ -81,10 +70,14 @@ class Round extends Component {
     // Start first round of betting
     const wait = setTimeout(() => {
       console.log(this.state.turnQueue)
+      console.log(this.state.players)
+      console.log(this.state.playas)
+      this.state.playas[0].inhurr()
     }, 0)
 
     //  Bring out the flop
     this.flop()
+    
   }
 
 
@@ -111,64 +104,30 @@ class Round extends Component {
   }
 
   newPlayers() {
-    this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {true}
-    smallBlind={false}
-    bigBlind= {false} 
-    isTurn={false}
-    key={this.state.keyCount}
-    />)
-    this.state.keyCount++
 
-    this.state.players.push( <Player name="Dilsey" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {true}
-    bigBlind= {false} 
-    isTurn={false}
-    key={this.state.keyCount}
-    />)
-    this.state.keyCount++
+    // for (let i = 0 ; i < players.length ; i++) {
+    //   this.state.players.push( <Player 
+    //   name={players[i].name} 
+    //   wealth={10} 
+    //   hand={[]}
+    //   currBet= {0}
+    //   inPot= {0}
+    //   fold= {false}
+    //   bet= {false}
+    //   raise= {false}
+    //   call= {false}
+    //   dealer= {true}
+    //   smallBlind={false}
+    //   bigBlind= {false} 
+    //   isTurn={false}
+    //   key={players[i].key}
+    //   />)
+    // }
 
-    this.state.players.push( <Player name="Brian" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {false}
-    bigBlind= {true} 
-    isTurn={false}
-      key={this.state.keyCount}
-    />)
-    this.state.keyCount++
-    this.state.players.push( <Player name="Bax" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {false}
-    bigBlind= {false} 
-    isTurn={false}
-    key={this.state.keyCount}
-    />)
-    this.state.keyCount++
+    for (let i = 0 ; i < players.length ; i++) {
+      this.state.playas.push(new Player(players[i].name, 10))
+    }
+
   }
 
   addBlinds() {
@@ -229,7 +188,7 @@ class Round extends Component {
         {this.state.pot}
 
         <h3>Players:</h3>
-        {players.map(player => 
+        {/* {players.map(player => 
       <Player 
       name= {player.name}
       wealth={player.wealth} 
@@ -247,7 +206,7 @@ class Round extends Component {
       key={player.key}
       
       />  
-      )}
+      )} */}
 
         <h3>House:</h3>
         {this.state.houseCards.map(c => <p> {c.number} of {c.suit} </p>)}
