@@ -8,16 +8,7 @@ class Player extends Component {
     wealth: this.props.wealth,
     hand: this.props.hand,
     key: this.props.key
-    // currBet: currBet,
-    // inPot: inPot,
-    // fold: fold,
-    // bet: bet,
-    // raise: raise,
-    // call: call,
-    // dealer: dealer,
-    // smallBlind: smallBlind,
-    // bigBlind: bigBlind,
-    // isTurn: isTurn 
+
   }
 
 
@@ -67,14 +58,14 @@ class Player extends Component {
 
     return (
       <div className="player">
-        
+        <div className={this.props.action}>
         <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}
         <Button click={this.props.fold} text="Fold"/>
         <Button click={this.call} text="Call"/>
         <Button click={this.raise} text="Raise"/>
-       
+       </div>
       </div>  
     )
   }

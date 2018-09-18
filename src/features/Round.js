@@ -36,7 +36,19 @@ class Round extends Component {
     players: [],
     // array of indices [D, SB, BB]]
     blinds: this.props.blinds,
-    action: 0,
+    action: 1,
+    1: "player__waiting",
+    2: "player__waiting",
+    3: "player__waiting",
+    4: "player__waiting",
+    5: "player__waiting",
+    6: "player__waiting",
+    7: "player__waiting",
+    8: "player__waiting",
+    9: "player__waiting",
+    10: "player__waiting",
+    11: "player__waiting",
+    12: "player__waiting"
 
   }
 
@@ -68,7 +80,6 @@ class Round extends Component {
 
     // Start first round of betting
     const wait = setTimeout(() => {
-      console.log(this.state.turnQueue)
       console.log(this.state.players)
 
     }, 0)
@@ -121,13 +132,18 @@ class Round extends Component {
 
  whosTurn() {
 
+  for (var i = 0 ; i < players.length ; i++) {
+    if (this.state.action === players[i].key) {
+      console.log(players[i].name)
+    }
+  }
 
   }
 
   moveAction() {
-    if (this.state.action === this.state.players.length - 1) {
+    if (this.state.action === this.state.players.length) {
       this.setState({
-        action: 0
+        action: 1
       })
     }else {
       this.setState({
@@ -170,6 +186,7 @@ class Round extends Component {
   render() {
     return (
       <div>
+        Action on player &nbsp;
         {this.state.action}
         <h3>Pot:</h3>
         {this.state.pot}
@@ -184,9 +201,10 @@ class Round extends Component {
           key={player.key} 
 
           fold={this.fold}
+          action={this.state[player.key]}
           />
         )}
-{/* <Player/> */}
+
         <h3>House:</h3>
         {this.state.houseCards.map(c => <p> {c.number} of {c.suit} </p>)}
       </div>

@@ -12,9 +12,7 @@ class PlayerLogic {
   }
 
   fold() {
-    // this.setState({
-    //   fold: true
-    // })
+
     console.log(this.key)
     this.wealth--
   }

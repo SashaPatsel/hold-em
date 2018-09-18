@@ -110,3 +110,6 @@ body {
   font-family: 'Archivo Narrow', sans-serif;
   font-weight: 400px;
   line-height: 1.7; }
+
+.player__waiting {
+  background-color: red; }
