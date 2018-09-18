@@ -183,8 +183,15 @@ const async = setTimeout(() => {
   
 
   fold(arg) {
-    console.log(this, arg)
-    // this.moveAction()
+    const async = setTimeout(() => {
+      if (arg === this.state.action) {
+          this.moveAction()
+      } else {
+        console.log("It ain't yo turn")
+      }
+     
+    }, 0)
+
   }
 
   flop() {
