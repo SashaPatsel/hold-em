@@ -179,7 +179,7 @@ console.log(this.state.playersInHand, this.state.action)
   }
 
   async moveAction() {
-    if (this.state.action === this.state.playersInHand.length) {
+    if (this.state.action === this.state.playersInHand.length -1) {
       await this.setState({
         action: 0
       })
@@ -215,8 +215,7 @@ console.log(this.state.playersInHand, this.state.action)
 
 
   fold(id) {
-    console.log("action",id,this.state.action,this.state.playersInHand[this.state.action])
-console.log("indexof",this.state.playersInHand.indexOf(this.state.action))
+
     if (id === this.state.playersInHand[this.state.action]) {
       this.moveAction()
       this.outOfHand(id)
