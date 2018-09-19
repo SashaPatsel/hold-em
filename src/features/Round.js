@@ -152,11 +152,12 @@ class Round extends Component {
 
 
 
- whosTurn() {
+ whosTurn(id) {
 
 
 console.log("action before whosTurn",this.state.playersInHand, this.state.action)
    this.setState({
+     [id]: "player__waiting",
       [this.state.playersInHand[this.state.action]]: "player__action"
     })
 
