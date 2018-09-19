@@ -102,7 +102,7 @@ class Round extends Component {
     this.dealCard()
     this.dealCard()
 
-    this.whosTurn()
+    this.whosTurn(null)
 
 
     //  Bring out the flop
@@ -154,31 +154,15 @@ class Round extends Component {
 
  whosTurn() {
 
-    // for (var i = 0; i < players.length; i++) {
-    //   const last = this.state.action
-    //   if (this.state.action === this.state.playersInHand[i] && i !== 0) {
-    //     console.log("if",this.state.playersInHand[i-1])
-    //     this.setState({
-          
-    //       [this.state.playersInHand[i-1]]: "player__waiting",
-    //       [this.state.playersInHand[i]]: "player__action"
-    //     })
-    //   } else if (this.state.action === this.state.playersInHand[i] && i === 0) {
-    //     console.log("else",this.state.playersInHand.length -1)
-    //     this.setState({
-    //       [this.state.playersInHand[this.state.playersInHand.length -1]]: "player__waiting",
-    //       [this.state.playersInHand[i]]: "player__action"
-    //     })
-    //   }
-    // }
-console.log(this.state.playersInHand, this.state.action)
+
+console.log("action before whosTurn",this.state.playersInHand, this.state.action)
    this.setState({
       [this.state.playersInHand[this.state.action]]: "player__action"
     })
 
   }
 
-  async moveAction() {
+  async moveAction(id) {
     if (this.state.action === this.state.playersInHand.length -1) {
       await this.setState({
         action: 0
@@ -188,7 +172,8 @@ console.log(this.state.playersInHand, this.state.action)
         action: this.state.action + 1
       })
     }
-    this.whosTurn()
+    console.log("action after whosTurn",this.state.action)
+    this.whosTurn(id)
   }
 
  outOfHand(id) {
@@ -217,7 +202,7 @@ console.log(this.state.playersInHand, this.state.action)
   fold(id) {
 
     if (id === this.state.playersInHand[this.state.action]) {
-      this.moveAction()
+      this.moveAction(id)
       this.outOfHand(id)
     } else { 
       console.log("It ain't yo turn")
@@ -226,8 +211,8 @@ console.log(this.state.playersInHand, this.state.action)
   }
 
   call(id) {
-    if (id === this.state.action) {
-      this.moveAction()
+    if (id === this.state.playersInHand[this.state.action]) {
+      this.moveAction(id)
     }
   }
 
