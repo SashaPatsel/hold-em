@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import deck from "../data/deck.json"
 import Player from "./Player"
-import PlayerLogic from "./PlayerLogic"
 
 const players = [
   {
@@ -136,8 +135,6 @@ class Round extends Component {
   newPlayers() {
 
     for (let i = 0 ; i < players.length ; i++) {
-      // this.state.players.push(new PlayerLogic(players[i].name, players[i].wealth, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].key
-      // ))
       this.state.players.push(players[i])
     }
 
@@ -198,6 +195,14 @@ class Round extends Component {
     this.whosTurn()
   }
 
+  outOfHand(id) {
+    for (var i = 0 ; i < this.state.players.length ; i++) {
+      if(this.state.players[i].key === id) {
+        this.state.players.splice(i, 1)
+      }
+    }
+  }
+
   dealCard() {
     for (let i = 0; i < this.state.players.length; i++) {
       this.state.players[i].hand.push(this.state.deck.pop())
@@ -210,6 +215,7 @@ class Round extends Component {
     
     if (id === this.state.action) {
         this.moveAction()
+        this.outOfHand(id)
     } else {
       console.log("It ain't yo turn")
     }
