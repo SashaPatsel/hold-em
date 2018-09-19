@@ -180,7 +180,7 @@ class Round extends Component {
   }
 
   async moveAction() {
-    if (this.state.action === this.state.players.length) {
+    if (this.state.action === this.state.playersInHand.length) {
       await this.setState({
         action: 1
       })
@@ -193,14 +193,14 @@ class Round extends Component {
   }
 
  outOfHand(id) {
-  console.log(this.state.playersInHand, id)
+
     for (var i = 0; i < this.state.playersInHand.length; i++) {
       if (this.state.playersInHand[i] === id) {
         
          this.setState({
-          [id]: "player__out"
+          [this.state.playersInHand[i]]: "player__out"
         })
-        console.log("out", id, this.state)
+ 
         this.state.playersInHand.splice(i,1)
 
       }
@@ -216,7 +216,7 @@ class Round extends Component {
 
 
   fold(id) {
-console.log(id)
+
     if (id === this.state.action) {
       this.moveAction()
       this.outOfHand(id)
