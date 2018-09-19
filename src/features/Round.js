@@ -10,6 +10,7 @@ const players = [
     dealer: true,
     smallBlind: false,
     bigBlind: false,
+    inHand: true,
     key: 1
   },
   {
@@ -19,7 +20,8 @@ const players = [
     dealer: false,
     smallBlind: true,
     bigBlind: false,
-    key: 2 
+    inHand: true,
+    key: 2
   },
   {
     name: "Brian",
@@ -28,6 +30,7 @@ const players = [
     dealer: false,
     smallBlind: false,
     bigBlind: true,
+    inHand: true,
     key: 3
   },
   {
@@ -37,6 +40,7 @@ const players = [
     dealer: false,
     smallBlind: false,
     bigBlind: false,
+    inHand: true,
     key: 4
   },
 ]
@@ -53,6 +57,7 @@ class Round extends Component {
     dealer: this.props.dealer,
     action: 1,
     currBet: 0,
+    0: "player__waiting",
     1: "player__waiting",
     2: "player__waiting",
     3: "player__waiting",
@@ -70,14 +75,14 @@ class Round extends Component {
 
 
 
-  componentWillMount() {
+  async componentWillMount() {
     this.fold = this.fold.bind(this)
-    this.setState({
+    await this.setState({
       action: this.state.dealer + 3
     })
     this.startRound()
     console.log("Round", this.state)
-    
+
   }
 
 
@@ -106,7 +111,7 @@ class Round extends Component {
 
     //  Bring out the flop
     // this.flop()
-    
+
   }
 
 
@@ -134,7 +139,7 @@ class Round extends Component {
 
   newPlayers() {
 
-    for (let i = 0 ; i < players.length ; i++) {
+    for (let i = 0; i < players.length; i++) {
       this.state.players.push(players[i])
     }
 
@@ -150,55 +155,59 @@ class Round extends Component {
 
 
 
- async whosTurn() {
+  whosTurn() {
 
-  await this.setState({
-    1: "player__waiting",
-    2: "player__waiting",
-    3: "player__waiting",
-    4: "player__waiting",
-    5: "player__waiting",
-    6: "player__waiting",
-    7: "player__waiting",
-    8: "player__waiting",
-    9: "player__waiting",
-    10: "player__waiting",
-    11: "player__waiting",
-    12: "player__waiting"
-  })
+    // await this.setState({
+    //   0: "player__waiting",
+    //   1: "player__waiting",
+    //   2: "player__waiting",
+    //   3: "player__waiting",
+    //   4: "player__waiting",
+    //   5: "player__waiting",
+    //   6: "player__waiting",
+    //   7: "player__waiting",
+    //   8: "player__waiting",
+    //   9: "player__waiting",
+    //   10: "player__waiting",
+    //   11: "player__waiting",
+    //   12: "player__waiting"
+    // })
 
-    for (var i = 0 ; i < players.length ; i++) {
-      if (this.state.action === players[i].key) {
+    for (var i = 0; i < players.length; i++) {
+      const last = this.state.action
+      if (this.state.action === players[i].key && i !== 0) {
         this.setState({
+          [players[i].key-1]: "player__waiting",
           [players[i].key]: "player__action"
         })
-        console.log("key",players[i].key)
-        console.log("action",this.state.action)
+      } else if (this.state.action === players[i].key && i === 0) {
+        this.setState({
+          [players.length]: "player__waiting",
+          [players[i].key]: "player__action"
+        })
       }
     }
 
 
   }
 
-  moveAction() {
+  async moveAction() {
     if (this.state.action === this.state.players.length) {
-      this.setState({
-        action: 1,
-        currBet: this.state.currBet + 1
+      await this.setState({
+        action: 1
       })
-    }else {
-      this.setState({
-        action: this.state.action + 1,
-        currBet: this.state.currBet + 1
+    } else {
+      await this.setState({
+        action: this.state.action + 1
       })
     }
     this.whosTurn()
   }
 
   outOfHand(id) {
-    for (var i = 0 ; i < this.state.players.length ; i++) {
-      if(this.state.players[i].key === id) {
-        this.state.players.splice(i, 1)
+    for (var i = 0; i < this.state.players.length; i++) {
+      if (this.state.players[i].key === id) {
+        this.state.players[i].inHand = false
       }
     }
   }
@@ -209,23 +218,23 @@ class Round extends Component {
     }
   }
 
-  
 
-  async fold(id) {
-    
+
+  fold(id) {
+
     if (id === this.state.action) {
-        this.moveAction()
-        this.outOfHand(id)
+      this.moveAction()
+      this.outOfHand(id)
     } else {
       console.log("It ain't yo turn")
     }
-     
+
   }
 
   call(id) {
     if (id === this.state.action) {
       this.moveAction()
-    } 
+    }
   }
 
   flop() {
@@ -255,21 +264,21 @@ class Round extends Component {
         {this.state.pot}
 
         <h3>Players:</h3>
-        {this.state.players.map(player => 
+        {this.state.players.map(player =>
 
           <Player
-          name={player.name} 
-          wealth={player.wealth} 
-          hand={player.hand}
-          key={player.key} 
-          minBet={this.state.minBet}
-          dealer={player.dealer}
-          smallBlind={player.smallBlind}
-          bigBlind={player.bigBlind}
-          currBet={this.state.currBet}
-          fold={() => this.fold(player.key)}
-          call={() =>this.call(player.key)}
-          action={this.state[player.key]}
+            name={player.name}
+            wealth={player.wealth}
+            hand={player.hand}
+            key={player.key}
+            minBet={this.state.minBet}
+            dealer={player.dealer}
+            smallBlind={player.smallBlind}
+            bigBlind={player.bigBlind}
+            currBet={this.state.currBet}
+            fold={() => this.fold(player.key)}
+            call={() => this.call(player.key)}
+            action={this.state[player.key]}
           />
         )}
 

@@ -39,7 +39,7 @@ class Player extends Component {
   }
 
   payBlind() {
-    console.log(this.state.name, this.state.smallBlind)
+
     if (this.state.smallBlind === true) {
       this.setState({
         wealth: this.state.wealth - this.state.minBet,
