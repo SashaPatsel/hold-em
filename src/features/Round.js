@@ -53,7 +53,7 @@ class Round extends Component {
     houseCards: [],
     minBet: .1,
     players: [],
-    // array of indices [D, SB, BB]]
+    playersInHand: [],
     dealer: this.props.dealer,
     action: 1,
     currBet: 0,
@@ -141,6 +141,7 @@ class Round extends Component {
 
     for (let i = 0; i < players.length; i++) {
       this.state.players.push(players[i])
+      this.state.playersInHand.push(players[i].key)
     }
 
   }
@@ -205,9 +206,10 @@ class Round extends Component {
   }
 
   outOfHand(id) {
-    for (var i = 0; i < this.state.players.length; i++) {
-      if (this.state.players[i].key === id) {
-        this.state.players[i].inHand = false
+    for (var i = 0; i < this.state.playersInHand.length; i++) {
+      if (this.state.playersInHand[i] === id) {
+        this.state.playersInHand.splice(i,1)
+        console.log(this.state.playersInHand)
       }
     }
   }
