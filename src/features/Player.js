@@ -62,7 +62,7 @@ class Player extends Component {
       call() {
       
         this.setState({
-          wealth: this.props.currBet - this.state.inTurn
+          wealth: this.state.wealth - (this.props.currBet - this.state.inTurn)
         })
       }
     

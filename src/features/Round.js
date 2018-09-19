@@ -146,7 +146,8 @@ class Round extends Component {
   addBlinds() {
     // Add small blind + big blind
     this.setState({
-      pot: ((this.state.minBet + this.state.minBet * 2).toFixed(2))
+      pot: ((this.state.minBet + this.state.minBet * 2).toFixed(2)),
+      currBet: this.state.minBet * 2
     })
   }
 
@@ -205,9 +206,9 @@ class Round extends Component {
 
   
 
-  async fold(arg) {
+  async fold(id) {
     
-    if (arg === this.state.action) {
+    if (id === this.state.action) {
         this.moveAction()
     } else {
       console.log("It ain't yo turn")
@@ -215,8 +216,10 @@ class Round extends Component {
      
   }
 
-  call() {
-    
+  call(id) {
+    if (id === this.state.action) {
+      this.moveAction()
+    } 
   }
 
   flop() {
@@ -259,7 +262,7 @@ class Round extends Component {
           bigBlind={player.bigBlind}
           currBet={this.state.currBet}
           fold={() => this.fold(player.key)}
-          call={this.call}
+          call={() =>this.call(player.key)}
           action={this.state[player.key]}
           />
         )}
