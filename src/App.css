@@ -113,3 +113,6 @@ body {
 
 .player__action {
   background-color: orangered; }
+
+.player__out {
+  background-color: #969696; }

@@ -158,33 +158,20 @@ class Round extends Component {
 
   whosTurn() {
 
-    // await this.setState({
-    //   0: "player__waiting",
-    //   1: "player__waiting",
-    //   2: "player__waiting",
-    //   3: "player__waiting",
-    //   4: "player__waiting",
-    //   5: "player__waiting",
-    //   6: "player__waiting",
-    //   7: "player__waiting",
-    //   8: "player__waiting",
-    //   9: "player__waiting",
-    //   10: "player__waiting",
-    //   11: "player__waiting",
-    //   12: "player__waiting"
-    // })
-
     for (var i = 0; i < players.length; i++) {
       const last = this.state.action
-      if (this.state.action === players[i].key && i !== 0) {
+      if (this.state.action === this.state.playersInHand[i] && i !== 0) {
+        console.log("if",this.state.playersInHand[i-1])
         this.setState({
-          [players[i].key-1]: "player__waiting",
-          [players[i].key]: "player__action"
+          
+          [this.state.playersInHand[i-1]]: "player__waiting",
+          [this.state.playersInHand[i]]: "player__action"
         })
-      } else if (this.state.action === players[i].key && i === 0) {
+      } else if (this.state.action === this.state.playersInHand[i] && i === 0) {
+        console.log("else",this.state.playersInHand.length -1)
         this.setState({
-          [players.length]: "player__waiting",
-          [players[i].key]: "player__action"
+          [this.state.playersInHand[this.state.playersInHand.length -1]]: "player__waiting",
+          [this.state.playersInHand[i]]: "player__action"
         })
       }
     }
@@ -205,11 +192,17 @@ class Round extends Component {
     this.whosTurn()
   }
 
-  outOfHand(id) {
+ outOfHand(id) {
+  console.log(this.state.playersInHand, id)
     for (var i = 0; i < this.state.playersInHand.length; i++) {
       if (this.state.playersInHand[i] === id) {
+        
+         this.setState({
+          [id]: "player__out"
+        })
+        console.log("out", id, this.state)
         this.state.playersInHand.splice(i,1)
-        console.log(this.state.playersInHand)
+
       }
     }
   }
@@ -223,7 +216,7 @@ class Round extends Component {
 
 
   fold(id) {
-
+console.log(id)
     if (id === this.state.action) {
       this.moveAction()
       this.outOfHand(id)
