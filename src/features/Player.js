@@ -12,6 +12,9 @@ class Player extends Component {
     dealer: this.props.dealer,
     smallBlind: this.props.smallBlind,
     bigBlind: this.props.bigBlind,
+    inHand: true,
+    inTurn: 0,
+    inPot: 0
 
 
   }
@@ -38,11 +41,15 @@ class Player extends Component {
         console.log(this.state.name, this.state.smallBlind)
         if (this.state.smallBlind === true) {
           this.setState({
-            wealth: this.state.wealth - this.state.minBet
+            wealth: this.state.wealth - this.state.minBet,
+            inTurn: this.state.minBet,
+            inPot: this.state.minBet
           })
         } else if (this.state.bigBlind === true) {
           this.setState({
-            wealth: this.state.wealth - this.state.minBet * 2
+            wealth: this.state.wealth - this.state.minBet * 2,
+            inTurn: this.state.minBet,
+            inPot: this.state.minBet
           })
         }
       }
@@ -53,7 +60,10 @@ class Player extends Component {
       }
     
       call() {
-        console.log("call",this.props.currBet)
+      
+        this.setState({
+          wealth: this.props.currBet - this.state.inTurn
+        })
       }
     
       raise() {
@@ -69,8 +79,8 @@ class Player extends Component {
         <h4>{this.state.name}:</h4>
         {this.state.hand.length > 0 ? this.renderHand(): "Wait to be dealt your hand"}
         Wealth: {this.state.wealth}
-        <Button click={this.props.fold} text="Fold"/>
-        <Button click={() => this.call()} text="Call"/>
+        <Button click={() => {this.fold(); this.props.fold()}} text="Fold"/>
+        <Button click={() => {this.call(); this.props.call()}} text="Call"/>
         <Button click={() => this.raise()} text="Raise"/>
        </div>
       </div>  

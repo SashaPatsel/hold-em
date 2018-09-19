@@ -215,6 +215,10 @@ class Round extends Component {
      
   }
 
+  call() {
+    
+  }
+
   flop() {
     // Burn a card
     this.state.deck.pop()
@@ -255,6 +259,7 @@ class Round extends Component {
           bigBlind={player.bigBlind}
           currBet={this.state.currBet}
           fold={() => this.fold(player.key)}
+          call={this.call}
           action={this.state[player.key]}
           />
         )}
