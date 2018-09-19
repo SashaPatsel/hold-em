@@ -55,7 +55,7 @@ class Round extends Component {
     players: [],
     playersInHand: [],
     dealer: this.props.dealer,
-    action: 1,
+    action: 0,
     currBet: 0,
     0: "player__waiting",
     1: "player__waiting",
@@ -75,11 +75,9 @@ class Round extends Component {
 
 
 
-  async componentWillMount() {
-    this.fold = this.fold.bind(this)
-    await this.setState({
-      action: this.state.dealer + 3
-    })
+  componentWillMount() {
+    
+  
     this.startRound()
     console.log("Round", this.state)
 
@@ -87,14 +85,17 @@ class Round extends Component {
 
 
 
-  startRound() {
+  async startRound() {
 
     // Shuffle the Deck
     this.shuffle(this.state.deck)
 
     // Move read-only player stats to Round state so that they can be changed
     this.newPlayers()
-
+    console.log(this.state.playersInHand,this.state.dealer + 3 )
+    await this.setState({
+      action: this.state.dealer + 3
+    })
     // Add blinds
     this.addBlinds()
     // Deal one card to each player, then repeat
@@ -103,11 +104,6 @@ class Round extends Component {
 
     this.whosTurn()
 
-    // Start first round of betting
-    const wait = setTimeout(() => {
-      console.log(this.state.players)
-
-    }, 0)
 
     //  Bring out the flop
     // this.flop()
@@ -156,33 +152,36 @@ class Round extends Component {
 
 
 
-  whosTurn() {
+ whosTurn() {
 
-    for (var i = 0; i < players.length; i++) {
-      const last = this.state.action
-      if (this.state.action === this.state.playersInHand[i] && i !== 0) {
-        console.log("if",this.state.playersInHand[i-1])
-        this.setState({
+    // for (var i = 0; i < players.length; i++) {
+    //   const last = this.state.action
+    //   if (this.state.action === this.state.playersInHand[i] && i !== 0) {
+    //     console.log("if",this.state.playersInHand[i-1])
+    //     this.setState({
           
-          [this.state.playersInHand[i-1]]: "player__waiting",
-          [this.state.playersInHand[i]]: "player__action"
-        })
-      } else if (this.state.action === this.state.playersInHand[i] && i === 0) {
-        console.log("else",this.state.playersInHand.length -1)
-        this.setState({
-          [this.state.playersInHand[this.state.playersInHand.length -1]]: "player__waiting",
-          [this.state.playersInHand[i]]: "player__action"
-        })
-      }
-    }
-
+    //       [this.state.playersInHand[i-1]]: "player__waiting",
+    //       [this.state.playersInHand[i]]: "player__action"
+    //     })
+    //   } else if (this.state.action === this.state.playersInHand[i] && i === 0) {
+    //     console.log("else",this.state.playersInHand.length -1)
+    //     this.setState({
+    //       [this.state.playersInHand[this.state.playersInHand.length -1]]: "player__waiting",
+    //       [this.state.playersInHand[i]]: "player__action"
+    //     })
+    //   }
+    // }
+console.log(this.state.playersInHand, this.state.action)
+   this.setState({
+      [this.state.playersInHand[this.state.action]]: "player__action"
+    })
 
   }
 
   async moveAction() {
     if (this.state.action === this.state.playersInHand.length) {
       await this.setState({
-        action: 1
+        action: 0
       })
     } else {
       await this.setState({
@@ -216,11 +215,12 @@ class Round extends Component {
 
 
   fold(id) {
-
-    if (id === this.state.action) {
+    console.log("action",id,this.state.action,this.state.playersInHand[this.state.action])
+console.log("indexof",this.state.playersInHand.indexOf(this.state.action))
+    if (id === this.state.playersInHand[this.state.action]) {
       this.moveAction()
       this.outOfHand(id)
-    } else {
+    } else { 
       console.log("It ain't yo turn")
     }
 
