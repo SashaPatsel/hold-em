@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import deck from "../data/deck.json"
 import Player from "./Player"
+import PlayerStats from "./PlayerStats"
+
 
 const players = [
   {
     name: "Sasha",
-    wealth: 10,
+    stack: 10,
     hand: [],
     dealer: true,
     smallBlind: false,
@@ -15,7 +17,7 @@ const players = [
   },
   {
     name: "Dilsey",
-    wealth: 10,
+    stack: 10,
     hand: [],
     dealer: false,
     smallBlind: true,
@@ -25,7 +27,7 @@ const players = [
   },
   {
     name: "Brian",
-    wealth: 10,
+    stack: 10,
     hand: [],
     dealer: false,
     smallBlind: false,
@@ -35,7 +37,7 @@ const players = [
   },
   {
     name: "Bax",
-    wealth: 10,
+    stack: 10,
     hand: [],
     dealer: false,
     smallBlind: false,
@@ -132,7 +134,8 @@ class Round extends Component {
   newPlayers() {
 
     for (let i = 0; i < players.length; i++) {
-      this.state.players.push(players[i])
+      this.state.players.push(new PlayerStats(players[i].name, players[i].stack, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].inHand, players[i].key))
+      // this.state.players.push(players[i])
       this.state.playersInHand.push(players[i].key)
     }
 
@@ -264,9 +267,9 @@ class Round extends Component {
             smallBlind={player.smallBlind}
             bigBlind={player.bigBlind}
             currBet={this.state.currBet}
-            fold={() => this.fold(player.key)}
-            call={() => this.call(player.key)}
-            status={this.state[player.key]}
+            fold={() => this.fold(player.id)}
+            call={() => this.call(player.id)}
+            status={this.state[player.id]}
             action={this.state.actionID}
           />
         )}

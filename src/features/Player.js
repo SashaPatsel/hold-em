@@ -100,9 +100,6 @@ class Player extends Component {
         </div>
 
 
-
-        {/* Used only for updating state */}
-        <div onChange={() => this.updateState(this.props.action)}>{this.props.action}</div>
       </div>
     )
   }
