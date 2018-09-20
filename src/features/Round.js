@@ -153,13 +153,19 @@ class Round extends Component {
 
 
   whosTurn(id) {
-
-
+  if (id) {
     console.log("action before whosTurn", this.state.playersInHand, this.state.action)
     this.setState({
-      // [id]: "player__waiting",
+      [id]: "player__waiting",
       [this.state.playersInHand[this.state.action]]: "player__action"
     })
+  } else {
+    this.setState({
+      [this.state.playersInHand[this.state.action]]: "player__action"
+    })
+  }
+
+
 
   }
 
@@ -200,7 +206,7 @@ class Round extends Component {
 
     if (id === this.state.playersInHand[this.state.action]) {
       this.outOfHand(id)
-      this.moveAction(id)
+      this.moveAction()
 
     } else {
       console.log("It ain't yo turn")
