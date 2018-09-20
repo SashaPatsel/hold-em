@@ -76,8 +76,8 @@ class Round extends Component {
 
 
   componentWillMount() {
-    
-  
+
+
     this.startRound()
     console.log("Round", this.state)
 
@@ -92,7 +92,7 @@ class Round extends Component {
 
     // Move read-only player stats to Round state so that they can be changed
     this.newPlayers()
-    console.log(this.state.playersInHand,this.state.dealer + 3 )
+    console.log(this.state.playersInHand, this.state.dealer + 3)
     await this.setState({
       action: this.state.dealer + 3
     })
@@ -152,44 +152,40 @@ class Round extends Component {
 
 
 
- whosTurn(id) {
+  whosTurn(id) {
 
 
-console.log("action before whosTurn",this.state.playersInHand, this.state.action)
-   this.setState({
-     [id]: "player__waiting",
+    console.log("action before whosTurn", this.state.playersInHand, this.state.action)
+    this.setState({
+      // [id]: "player__waiting",
       [this.state.playersInHand[this.state.action]]: "player__action"
     })
 
   }
 
   async moveAction(id) {
-    if (this.state.action === this.state.playersInHand.length -1) {
-      await this.setState({
+    if (this.state.action >= this.state.playersInHand.length - 1) {
+     await  this.setState({
         action: 0
       })
     } else {
-      await this.setState({
+    await  this.setState({
         action: this.state.action + 1
       })
     }
-    console.log("action after whosTurn",this.state.action)
+    // console.log("action after whosTurn", this.state.action)
     this.whosTurn(id)
   }
 
- outOfHand(id) {
+  outOfHand(id) {
+    console.log("action before outOfHand", this.state.playersInHand, this.state.action)
 
-    for (var i = 0; i < this.state.playersInHand.length; i++) {
-      if (this.state.playersInHand[i] === id) {
-        
-         this.setState({
-          [this.state.playersInHand[i]]: "player__out"
-        })
- 
-        this.state.playersInHand.splice(i,1)
+    this.setState({
+      [this.state.playersInHand[this.state.action]]: "player__out"
+    })
+    this.state.playersInHand.splice(this.state.action, 1)
+    console.log(this.state.playersInHand)
 
-      }
-    }
   }
 
   dealCard() {
@@ -203,9 +199,10 @@ console.log("action before whosTurn",this.state.playersInHand, this.state.action
   fold(id) {
 
     if (id === this.state.playersInHand[this.state.action]) {
-      this.moveAction(id)
       this.outOfHand(id)
-    } else { 
+      this.moveAction(id)
+
+    } else {
       console.log("It ain't yo turn")
     }
 
