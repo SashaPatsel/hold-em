@@ -99,7 +99,7 @@ class Round extends Component {
       action: this.state.dealer + 3
     })
     // Add blinds
-    this.addBlinds()
+    this.payBlinds()
     // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
@@ -141,12 +141,25 @@ class Round extends Component {
 
   }
 
-  addBlinds() {
+  payBlinds() {
     // Add small blind + big blind
     this.setState({
       pot: ((this.state.minBet + this.state.minBet * 2).toFixed(2)),
       currBet: this.state.minBet * 2
     })
+
+
+    for (var i = 0 ; i < this.state.players.length ; i++) {
+      if (this.state.players[i].sb) {
+       
+        this.state.players[i].stack-=this.state.minBet
+      }
+
+      if (this.state.players[i].bb) {
+        this.state.players[i].stack-=this.state.minBet*2
+      }
+    }
+
   }
 
 
@@ -262,6 +275,7 @@ class Round extends Component {
             hand={player.hand}
             key={player.key}
             id={player.key}
+            stack={player.stack}
             minBet={this.state.minBet}
             dealer={player.dealer}
             smallBlind={player.smallBlind}
