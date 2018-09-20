@@ -8,7 +8,7 @@ class Player extends Component {
     name: this.props.name,
     wealth: this.props.wealth,
     hand: this.props.hand,
-    key: this.props.key,
+    key: this.props.id,
     action: this.props.action,
     minBet: this.props.minBet,
     dealer: this.props.dealer,
@@ -25,6 +25,13 @@ class Player extends Component {
   componentDidMount() {
     this.payBlind()
 
+  }
+
+  updateState(state) {
+    console.log("yo")
+    this.setState({
+      action: state
+    })
   }
 
   renderHand() {
@@ -65,6 +72,7 @@ class Player extends Component {
 
   call() {
     // If the key matches action, which should be passed down as a prop...
+    console.log(this.state)
     if (this.state.action === this.state.key) {
       this.setState({
         wealth: this.state.wealth - (this.props.currBet - this.state.inTurn)
@@ -90,6 +98,11 @@ class Player extends Component {
           <Button click={() => { this.call(); this.props.call() }} text="Call" />
           <Button click={() => this.raise()} text="Raise" />
         </div>
+
+
+
+        {/* Used only for updating state */}
+        <div onChange={() => this.updateState(this.props.action)}>{this.props.action}</div>
       </div>
     )
   }

@@ -56,6 +56,7 @@ class Round extends Component {
     playersInHand: [],
     dealer: this.props.dealer,
     action: 0,
+    actionID: 0,
     currBet: 0,
     0: "player__waiting",
     1: "player__waiting",
@@ -92,7 +93,6 @@ class Round extends Component {
 
     // Move read-only player stats to Round state so that they can be changed
     this.newPlayers()
-    console.log(this.state.playersInHand, this.state.dealer + 3)
     await this.setState({
       action: this.state.dealer + 3
     })
@@ -103,10 +103,6 @@ class Round extends Component {
     this.dealCard()
 
     this.whosTurn(null)
-
-
-    //  Bring out the flop
-    // this.flop()
 
   }
 
@@ -158,11 +154,13 @@ class Round extends Component {
 
     this.setState({
       [id]: "player__waiting",
-      [this.state.playersInHand[this.state.action]]: "player__action"
+      [this.state.playersInHand[this.state.action]]: "player__action",
+      actionID: this.state.playersInHand[this.state.action]
     })
   } else {
     this.setState({
-      [this.state.playersInHand[this.state.action]]: "player__action"
+      [this.state.playersInHand[this.state.action]]: "player__action",
+      actionID: this.state.playersInHand[this.state.action]
     })
   }
 
@@ -260,6 +258,7 @@ class Round extends Component {
             wealth={player.wealth}
             hand={player.hand}
             key={player.key}
+            id={player.key}
             minBet={this.state.minBet}
             dealer={player.dealer}
             smallBlind={player.smallBlind}
@@ -268,7 +267,7 @@ class Round extends Component {
             fold={() => this.fold(player.key)}
             call={() => this.call(player.key)}
             status={this.state[player.key]}
-            action={this.state.playersInHand[this.state.action]}
+            action={this.state.actionID}
           />
         )}
 
