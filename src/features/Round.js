@@ -153,8 +153,9 @@ class Round extends Component {
 
 
   whosTurn(id) {
-  if (id) {
     console.log("action before whosTurn", this.state.playersInHand, this.state.action)
+  if (id) {
+
     this.setState({
       [id]: "player__waiting",
       [this.state.playersInHand[this.state.action]]: "player__action"
@@ -169,12 +170,15 @@ class Round extends Component {
 
   }
 
-  async moveAction(id) {
-    if (this.state.action >= this.state.playersInHand.length - 1) {
+  async moveAction(id, first) {
+
+    // If the last player in the array invokes this function...
+    if (this.state.action >= this.state.playersInHand.length - 1 || first === 0) {
      await  this.setState({
         action: 0
       })
     } else {
+          
     await  this.setState({
         action: this.state.action + 1
       })
@@ -184,14 +188,15 @@ class Round extends Component {
   }
 
   outOfHand(id) {
-    console.log("action before outOfHand", this.state.playersInHand, this.state.action)
 
     this.setState({
       [this.state.playersInHand[this.state.action]]: "player__out"
     })
-    this.state.playersInHand.splice(this.state.action, 1)
-    console.log(this.state.playersInHand)
-
+    this.state.playersInHand.splice(this.state.playersInHand.indexOf(id), 1)
+    // Keep track of action here before it changes.
+    const ifFirst = this.state.action
+    // Pass null so whosTurn function knows player folded
+    this.moveAction(null, ifFirst)
   }
 
   dealCard() {
@@ -206,7 +211,7 @@ class Round extends Component {
 
     if (id === this.state.playersInHand[this.state.action]) {
       this.outOfHand(id)
-      this.moveAction()
+      
 
     } else {
       console.log("It ain't yo turn")
