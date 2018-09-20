@@ -9,6 +9,7 @@ class Player extends Component {
     wealth: this.props.wealth,
     hand: this.props.hand,
     key: this.props.key,
+    action: this.props.action,
     minBet: this.props.minBet,
     dealer: this.props.dealer,
     smallBlind: this.props.smallBlind,
@@ -63,10 +64,13 @@ class Player extends Component {
   }
 
   call() {
+    // If the key matches action, which should be passed down as a prop...
+    if (this.state.action === this.state.key) {
+      this.setState({
+        wealth: this.state.wealth - (this.props.currBet - this.state.inTurn)
+      })
+    }
 
-    this.setState({
-      wealth: this.state.wealth - (this.props.currBet - this.state.inTurn)
-    })
   }
 
   raise() {
@@ -78,7 +82,7 @@ class Player extends Component {
 
     return (
       <div className="player">
-        <div className={this.props.action}>
+        <div className={this.props.status}>
           <h4>{this.state.name}:</h4>
           {this.state.hand.length > 0 ? this.renderHand() : "Wait to be dealt your hand"}
           Wealth: {this.state.wealth}

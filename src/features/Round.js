@@ -153,7 +153,7 @@ class Round extends Component {
 
 
   whosTurn(id) {
-    console.log("action before whosTurn", this.state.playersInHand, this.state.action)
+
   if (id) {
 
     this.setState({
@@ -221,6 +221,7 @@ class Round extends Component {
 
   call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
+
       this.moveAction(id)
     }
   }
@@ -266,7 +267,8 @@ class Round extends Component {
             currBet={this.state.currBet}
             fold={() => this.fold(player.key)}
             call={() => this.call(player.key)}
-            action={this.state[player.key]}
+            status={this.state[player.key]}
+            action={this.state.playersInHand[this.state.action]}
           />
         )}
 
