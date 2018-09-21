@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "../components/Button"
-import Input from "../components/Form/Input"
+
 
 class Player extends Component {
 
@@ -97,6 +97,7 @@ class Player extends Component {
           <Button click={() => { this.fold(); this.props.fold() }} text="Fold" />
           <Button click={() => { this.call(); this.props.call() }} text="Call" />
           <Button click={() => this.raise()} text="Raise" />
+          
         </div>
 
 

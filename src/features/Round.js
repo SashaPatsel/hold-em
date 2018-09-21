@@ -3,6 +3,8 @@ import deck from "../data/deck.json"
 import Player from "./Player"
 import PlayerStats from "./PlayerStats"
 
+import Input from "../components/Form/Input"
+
 
 const players = [
   {
@@ -276,6 +278,20 @@ class Round extends Component {
     }
   }
 
+  handleInputChange = event => {
+   
+      const { name, value } = event.target;
+
+      if (parseInt(event.target.id) === this.state.playersInHand[this.state.action]) {
+        this.setState({
+          [name]: value
+        });
+
+      console.log(this.state[name], event.target.id)
+      }
+
+  };
+
   flop() {
     // Burn a card
     this.state.deck.pop()
@@ -304,7 +320,7 @@ class Round extends Component {
 
         <h3>Players:</h3>
         {this.state.players.map(player =>
-
+          <div>
           <Player
             name={player.name}
             wealth={player.wealth}
@@ -322,6 +338,9 @@ class Round extends Component {
             status={this.state[player.id]}
             action={this.state.actionID}
           />
+          
+          <Input onChange={this.handleInputChange} type="number" step={.1} id={player.id}/>
+          </div>
         )}
 
         <h3>House:</h3>
