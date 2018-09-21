@@ -162,9 +162,15 @@ class Round extends Component {
 
   }
 
+  checkWin() {
+    if (this.state.playersInHand.length < 2) {
+      console.log(`${this.state.playersInHand[0]} wins!`)
+    }
+  }
 
 
   whosTurn(id) {
+    this.checkWin()
 
   if (id) {
 
@@ -209,7 +215,7 @@ class Round extends Component {
     this.state.playersInHand.splice(this.state.playersInHand.indexOf(id), 1)
     // Keep track of action here before it changes. This helps move action recognize its a fold rather than bet or call
     const ifFirst = this.state.action
-
+    // don't move the action if anyone but the first or last person folded
     if (ifFirst !== 0 && ifFirst !== this.state.playersInHand.length) {
       console.log(ifFirst,this.state.playersInHand.length )
       this.whosTurn(null)
