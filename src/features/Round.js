@@ -153,11 +153,12 @@ class Round extends Component {
       if (this.state.players[i].sb) {
        
         this.state.players[i].stack-=this.state.minBet
-        this.state.players[i].in-=this.state.minBet
+        this.state.players[i].inPot+=this.state.minBet
       }
 
       if (this.state.players[i].bb) {
         this.state.players[i].stack-=this.state.minBet*2
+        this.state.players[i].inPot+=this.state.minBet*2
       }
     }
 
@@ -251,7 +252,6 @@ class Round extends Component {
 
   call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
-
       this.moveAction(id, null)
     }
   }
