@@ -82,7 +82,7 @@ class Player extends Component {
   }
 
   raise() {
-    console.log("raise", this.props.currBet)
+
   }
 
 
@@ -94,9 +94,9 @@ class Player extends Component {
           <h4>{this.state.name}:</h4>
           {this.state.hand.length > 0 ? this.renderHand() : "Wait to be dealt your hand"}
           Stack: {this.props.stack}
-          <Button click={() => { this.fold(); this.props.fold() }} text="Fold" />
-          <Button click={() => { this.call(); this.props.call() }} text="Call" />
-          <Button click={() => this.raise()} text="Raise" />
+          <Button click={() => this.props.fold() } text="Fold" />
+          <Button click={() => this.props.call() } text="Call" />
+          <Button click={() => this.props.raise()} text="Raise" />
           
         </div>
 

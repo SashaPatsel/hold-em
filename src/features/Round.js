@@ -278,16 +278,26 @@ class Round extends Component {
     }
   }
 
+  raise(id) {
+    if (id === this.state.playersInHand[this.state.action]) {
+      for (var i = 0 ; i < this.state.players.length ; i++) {
+        if (id === this.state.players[i].id) {
+          console.log(this.state[players[i].name])
+        }
+      }
+      
+    }
+  }
+
   handleInputChange = event => {
    
-      const { name, value } = event.target;
+      const {id, name, value } = event.target;
 
       if (parseInt(event.target.id) === this.state.playersInHand[this.state.action]) {
         this.setState({
           [name]: value
         });
-
-      console.log(this.state[name], event.target.id)
+        console.log(name)
       }
 
   };
@@ -335,11 +345,12 @@ class Round extends Component {
             currBet={this.state.currBet}
             fold={() => this.fold(player.id)}
             call={() => this.call(player.id)}
+            raise={() => this.raise(player.id)}
             status={this.state[player.id]}
             action={this.state.actionID}
           />
           
-          <Input onChange={this.handleInputChange} type="number" step={.1} id={player.id}/>
+          <Input onChange={this.handleInputChange} type="number" step={.1} name={player.name} id={player.id}/>
           </div>
         )}
 
