@@ -13,6 +13,7 @@ const players = [
     smallBlind: false,
     bigBlind: false,
     inPot: 0,
+    inBetRound: 0,
     key: 1
   },
   {
@@ -23,6 +24,7 @@ const players = [
     smallBlind: true,
     bigBlind: false,
     inPot: 0,
+    inBetRound: 0,
     key: 2
   },
   {
@@ -33,6 +35,7 @@ const players = [
     smallBlind: false,
     bigBlind: true,
     inPot: 0,
+    inBetRound: 0,
     key: 3
   },
   {
@@ -43,6 +46,7 @@ const players = [
     smallBlind: false,
     bigBlind: false,
     inPot: 0,
+    inBetRound: 0,
     key: 4
   },
 ]
@@ -134,7 +138,7 @@ class Round extends Component {
   newPlayers() {
 
     for (let i = 0; i < players.length; i++) {
-      this.state.players.push(new PlayerStats(players[i].name, players[i].stack, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].inHand, players[i].key))
+      this.state.players.push(new PlayerStats(players[i].name, players[i].stack, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].inPot,players[i].inBetRound, players[i].key))
       // this.state.players.push(players[i])
       this.state.playersInHand.push(players[i].key)
     }
@@ -154,11 +158,13 @@ class Round extends Component {
        
         this.state.players[i].stack-=this.state.minBet
         this.state.players[i].inPot+=this.state.minBet
+        this.state.players[i].inBetRound+=this.state.minBet
       }
 
       if (this.state.players[i].bb) {
         this.state.players[i].stack-=this.state.minBet*2
         this.state.players[i].inPot+=this.state.minBet*2
+        this.state.players[i].inBetRound+=this.state.minBet*2
       }
     }
 
@@ -252,6 +258,12 @@ class Round extends Component {
 
   call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
+      // Update the players stack as well as the pot
+      for (var i = 0 ; i < this.state.players.length ; i++) {
+        if (id === this.state.players[i].id) {
+          this.state.players[i].inPot = this.state.currBet - this.state.players[i].inBetRound
+        }
+      }
       this.moveAction(id, null)
     }
   }
@@ -263,7 +275,7 @@ class Round extends Component {
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
-
+// Will need to reinitialize moneyInRound
   }
 
   turnRiver() {
