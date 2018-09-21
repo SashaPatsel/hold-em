@@ -352,10 +352,7 @@ class Round extends Component {
             key={player.key}
             id={player.key}
             stack={player.stack}
-            minBet={this.state.minBet}
-            dealer={player.dealer}
-            smallBlind={player.smallBlind}
-            bigBlind={player.bigBlind}
+
             currBet={this.state.currBet}
             fold={() => this.fold(player.id)}
             call={() => this.call(player.id)}

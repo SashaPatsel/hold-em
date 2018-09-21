@@ -9,11 +9,7 @@ class Player extends Component {
     wealth: this.props.wealth,
     hand: this.props.hand,
     key: this.props.id,
-    action: this.props.action,
-    minBet: this.props.minBet,
-    dealer: this.props.dealer,
-    smallBlind: this.props.smallBlind,
-    bigBlind: this.props.bigBlind,
+
     inHand: true,
     inTurn: 0,
     inPot: 0
@@ -94,6 +90,7 @@ class Player extends Component {
           <h4>{this.state.name}:</h4>
           {this.state.hand.length > 0 ? this.renderHand() : "Wait to be dealt your hand"}
           Stack: {this.props.stack}
+          In Pot: 
           <Button click={() => this.props.fold() } text="Fold" />
           <Button click={() => this.props.call() } text="Call" />
           <Button click={() => this.props.raise()} text="Raise" />
