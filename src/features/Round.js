@@ -148,7 +148,7 @@ class Round extends Component {
   payBlinds() {
     // Add small blind + big blind
     this.setState({
-      pot: (this.state.minBet * 2).toFixed(2),
+      pot: (this.state.minBet + this.state.minBet * 2).toFixed(2),
       currBet: this.state.minBet * 2
     })
 
