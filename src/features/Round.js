@@ -278,11 +278,26 @@ class Round extends Component {
     }
   }
 
-  raise(id) {
+ async raise(id) {
     if (id === this.state.playersInHand[this.state.action]) {
       for (var i = 0 ; i < this.state.players.length ; i++) {
         if (id === this.state.players[i].id) {
-          console.log(this.state[players[i].name])
+          if (this.state[players[i].name] < this.state.currBet *2 || !this.state[players[i].name]) {
+            console.log("You need to raise to at least double the current bet")
+          } else if (this.state[players[i].name] > players[i].stack) {
+            console.log("Get yo money up")
+          } else {
+            this.state.players[i].inPot += this.state[players[i].name]
+            this.state.players[i].stack -= this.state[players[i].name]
+
+            await this.setState({
+              pot: parseFloat(this.state.pot) + parseFloat(this.state[players[i].name]),
+              currBet: parseFloat(this.state[players[i].name])
+            })
+            this.moveAction(id, null)
+
+          }
+         
         }
       }
       
@@ -297,7 +312,6 @@ class Round extends Component {
         this.setState({
           [name]: value
         });
-        console.log(name)
       }
 
   };
