@@ -207,10 +207,17 @@ class Round extends Component {
       [this.state.playersInHand[this.state.action]]: "player__out"
     })
     this.state.playersInHand.splice(this.state.playersInHand.indexOf(id), 1)
-    // Keep track of action here before it changes.
+    // Keep track of action here before it changes. This helps move action recognize its a fold rather than bet or call
     const ifFirst = this.state.action
+
+    if (ifFirst !== 0 && ifFirst !== this.state.playersInHand.length) {
+      console.log(ifFirst,this.state.playersInHand.length )
+      this.whosTurn(null)
+    } else {
     // Pass null so whosTurn function knows player folded
     this.moveAction(null, ifFirst)
+    }
+
   }
 
   dealCard() {
@@ -236,7 +243,7 @@ class Round extends Component {
   call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
 
-      this.moveAction(id)
+      this.moveAction(id, null)
     }
   }
 
