@@ -291,7 +291,7 @@ class Round extends Component {
             this.state.players[i].stack -= this.state[players[i].name]
 
             await this.setState({
-              pot: parseFloat(this.state.pot) + parseFloat(this.state[players[i].name]),
+              pot: (parseFloat(this.state.pot) + parseFloat(this.state[players[i].name])).toFixed(2),
               currBet: parseFloat(this.state[players[i].name])
             })
             this.moveAction(id, null)
@@ -352,7 +352,7 @@ class Round extends Component {
             key={player.key}
             id={player.key}
             stack={player.stack}
-
+            inPot={player.inPot}
             currBet={this.state.currBet}
             fold={() => this.fold(player.id)}
             call={() => this.call(player.id)}

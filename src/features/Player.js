@@ -89,8 +89,9 @@ class Player extends Component {
         <div className={this.props.status}>
           <h4>{this.state.name}:</h4>
           {this.state.hand.length > 0 ? this.renderHand() : "Wait to be dealt your hand"}
-          Stack: {this.props.stack}
-          In Pot: 
+          Stack: {parseFloat(this.props.stack).toFixed(2)}
+          <br/>
+          In Pot: {parseFloat(this.props.inPot).toFixed(2)}
           <Button click={() => this.props.fold() } text="Fold" />
           <Button click={() => this.props.call() } text="Call" />
           <Button click={() => this.props.raise()} text="Raise" />
