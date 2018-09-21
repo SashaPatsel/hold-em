@@ -12,7 +12,7 @@ const players = [
     dealer: true,
     smallBlind: false,
     bigBlind: false,
-    inHand: true,
+    inPot: 0,
     key: 1
   },
   {
@@ -22,7 +22,7 @@ const players = [
     dealer: false,
     smallBlind: true,
     bigBlind: false,
-    inHand: true,
+    inPot: 0,
     key: 2
   },
   {
@@ -32,7 +32,7 @@ const players = [
     dealer: false,
     smallBlind: false,
     bigBlind: true,
-    inHand: true,
+    inPot: 0,
     key: 3
   },
   {
@@ -42,7 +42,7 @@ const players = [
     dealer: false,
     smallBlind: false,
     bigBlind: false,
-    inHand: true,
+    inPot: 0,
     key: 4
   },
 ]
@@ -153,6 +153,7 @@ class Round extends Component {
       if (this.state.players[i].sb) {
        
         this.state.players[i].stack-=this.state.minBet
+        this.state.players[i].in-=this.state.minBet
       }
 
       if (this.state.players[i].bb) {
@@ -170,15 +171,17 @@ class Round extends Component {
 
 
   whosTurn(id) {
+    // check for winner everytime action moves
     this.checkWin()
 
   if (id) {
-
+// normal behavior
     this.setState({
       [id]: "player__waiting",
       [this.state.playersInHand[this.state.action]]: "player__action",
       actionID: this.state.playersInHand[this.state.action]
     })
+    // Handle the loss of a player in the playersInHand array
   } else {
     this.setState({
       [this.state.playersInHand[this.state.action]]: "player__action",
