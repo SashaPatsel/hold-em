@@ -220,35 +220,31 @@ class Round extends Component {
 
 whosTurn(id) {
     // check for winner everytime action moves
-    console.log("begin", this.state.playerMoves)
     this.checkWin()
     
     if (id) {
-      console.log("if")
+
       // normal behavior
     this.setState({
         [id]: "player__waiting",
         [this.state.playersInHand[this.state.action]]: "player__action",
-        actionID: this.state.playersInHand[this.state.action],
-        playerMoves: this.state.playerMoves + 1
+        actionID: this.state.playersInHand[this.state.action]
       })
       // Handle the loss of a player in the playersInHand array
     } else {
-      console.log("else", this.state.playerMoves)
+
       this.setState({
         [this.state.playersInHand[this.state.action]]: "player__action",
-        actionID: this.state.playersInHand[this.state.action],
-        playerMoves: this.state.playerMoves + 1
+        actionID: this.state.playersInHand[this.state.action]
       })
     }
 
     if (!this.state.roundJustStarted) {
       this.checkBetRound()
-    } else {
-      this.setState({
-        playerMoves: 0
-      })
+
     }
+      
+    
 
     this.setState({
       roundJustStarted: false
@@ -299,9 +295,12 @@ whosTurn(id) {
 
 
 
-  fold(id) {
+  async fold(id) {
 
     if (id === this.state.playersInHand[this.state.action]) {
+     await this.setState({
+        playerMoves: this.state.playerMoves + 1
+      })
       this.outOfHand(id)
 
 
@@ -314,7 +313,9 @@ whosTurn(id) {
   async call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
       // Update the players stack as well as the pot
-
+     await this.setState({
+        playerMoves: this.state.playerMoves + 1
+      })
       const player = this.checkPlayer(id)
 
       // Update player's money in pot
@@ -332,6 +333,9 @@ whosTurn(id) {
 
   async raise(id) {
     if (id === this.state.playersInHand[this.state.action]) {
+      await this.setState({
+        playerMoves: this.state.playerMoves + 1
+      })
       const player = this.checkPlayer(id)
       if (this.state[player.name] < this.state.currBet || !this.state[player.name]) {
         console.log("You need to raise to at least double the current bet")
