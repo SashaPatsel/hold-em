@@ -62,7 +62,10 @@ class Round extends Component {
     minBet: .1,
     players: [],
     playersInHand: [],
+    actionStarter: 0,
+    betRound: 0,
     dealer: this.props.dealer,
+    roundJustStarted: true,
     action: 0,
     actionID: 0,
     currBet: 0,
@@ -109,8 +112,9 @@ class Round extends Component {
     // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
-
+    
     this.whosTurn(null)
+    this.storeActionStarter()
 
   }
 
@@ -184,6 +188,20 @@ class Round extends Component {
     }
   }
 
+  storeActionStarter() {
+    this.setState({
+      actionStarter: this.state.action
+    })
+  }
+
+  checkBetRound() {
+    if (this.state.action === this.state.actionStarter) {
+      this.flop()
+    }
+  }
+
+
+
   checkPlayer(id) {
 
     for (var i = 0 ; i < this.state.players.length; i++) {
@@ -206,6 +224,7 @@ class Round extends Component {
       [id]: "player__waiting",
       [this.state.playersInHand[this.state.action]]: "player__action",
       actionID: this.state.playersInHand[this.state.action]
+
     })
     // Handle the loss of a player in the playersInHand array
   } else {
@@ -215,8 +234,13 @@ class Round extends Component {
     })
   }
 
+  if (!this.state.roundJustStarted) {
+    this.checkBetRound()
+  }
 
-
+this.setState({
+  roundJustStarted: false
+})
   }
 
   async moveAction(id, first) {
@@ -335,6 +359,10 @@ class Round extends Component {
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
+
+    this.setState({
+      betRound: this.state.betRound + 1
+    })
 // Will need to reinitialize moneyInRound
   }
 
