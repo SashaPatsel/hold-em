@@ -175,6 +175,12 @@ class Round extends Component {
   checkWin() {
     if (this.state.playersInHand.length < 2) {
       console.log(`${this.state.playersInHand[0]} wins!`)
+      const player = this.checkPlayer(this.state.playersInHand[0])
+      console.log(player.stack, parseFloat(this.state.pot))
+      player.stack+=parseFloat(this.state.pot)
+      this.setState({
+        inPot: 0
+      })
     }
   }
 
@@ -290,26 +296,22 @@ class Round extends Component {
 
  async raise(id) {
     if (id === this.state.playersInHand[this.state.action]) {
-      for (var i = 0 ; i < this.state.players.length ; i++) {
-        if (id === this.state.players[i].id) {
-          if (this.state[players[i].name] < this.state.currBet *2 || !this.state[players[i].name]) {
+      const player = this.checkPlayer(id)
+          if (this.state[player.name] < this.state.currBet || !this.state[player.name]) {
             console.log("You need to raise to at least double the current bet")
-          } else if (this.state[players[i].name] > players[i].stack) {
+          } else if (this.state[player.name] > player.stack) {
             console.log("Get yo money up")
           } else {
-            this.state.players[i].inPot += this.state[players[i].name]
-            this.state.players[i].stack -= this.state[players[i].name]
+            player.inPot += this.state[player.name]
+            player.stack -= this.state[player.name]
 
             await this.setState({
-              pot: (parseFloat(this.state.pot) + parseFloat(this.state[players[i].name])).toFixed(2),
-              currBet: parseFloat(this.state[players[i].name])
+              pot: (parseFloat(this.state.pot) + parseFloat(this.state[player.name])).toFixed(2),
+              currBet: parseFloat(this.state[player.name])
             })
             this.moveAction(id, null)
 
           }
-         
-        }
-      }
       
     }
   }
