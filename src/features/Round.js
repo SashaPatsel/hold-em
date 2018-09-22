@@ -200,7 +200,20 @@ class Round extends Component {
   checkBetRound() {
     console.log(this.state.playerMoves, this.state.actionStarter)
     if (this.state.playerMoves === this.state.actionStarter) {
-      this.flop()
+      this.storeActionStarter()
+      this.setState({
+        betRound: this.state.betRound + 1,
+        playerMoves: 0
+      })
+      if (this.state.betRound === 1) {
+        this.flop()
+        // Show cards
+      }else if (this.state.betRound > 3) {
+        console.log("Show Your cards")
+      } else {
+        this.turnRiver()
+      }
+      
     }
   }
 
@@ -376,14 +389,13 @@ whosTurn(id) {
     this.state.houseCards.push(this.state.deck.pop())
     this.state.houseCards.push(this.state.deck.pop())
 
-    this.setState({
-      betRound: this.state.betRound + 1
-    })
     // Will need to reinitialize moneyInRound
   }
 
   turnRiver() {
+    this.state.deck.pop()
 
+    this.state.houseCards.push(this.state.deck.pop())
   }
 
 
