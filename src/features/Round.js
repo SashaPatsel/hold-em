@@ -198,7 +198,7 @@ class Round extends Component {
   
   // Check to see if we should move to next round of betting
   checkBetRound() {
-
+    console.log(this.state.playerMoves, this.state.actionStarter)
     if (this.state.playerMoves === this.state.actionStarter) {
       this.flop()
     }
@@ -220,27 +220,34 @@ class Round extends Component {
 
 whosTurn(id) {
     // check for winner everytime action moves
+    console.log("begin", this.state.playerMoves)
     this.checkWin()
-
+    
     if (id) {
+      console.log("if")
       // normal behavior
     this.setState({
         [id]: "player__waiting",
         [this.state.playersInHand[this.state.action]]: "player__action",
         actionID: this.state.playersInHand[this.state.action],
-        playerMoves: this .state.playerMoves + 1
+        playerMoves: this.state.playerMoves + 1
       })
       // Handle the loss of a player in the playersInHand array
     } else {
+      console.log("else", this.state.playerMoves)
       this.setState({
         [this.state.playersInHand[this.state.action]]: "player__action",
         actionID: this.state.playersInHand[this.state.action],
-        playerMoves: this .state.playerMoves + 1
+        playerMoves: this.state.playerMoves + 1
       })
     }
 
     if (!this.state.roundJustStarted) {
       this.checkBetRound()
+    } else {
+      this.setState({
+        playerMoves: 0
+      })
     }
 
     this.setState({
