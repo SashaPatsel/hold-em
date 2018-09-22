@@ -63,6 +63,7 @@ class Round extends Component {
     players: [],
     playersInHand: [],
     actionStarter: 0,
+    playerMoves: 0,
     betRound: 0,
     dealer: this.props.dealer,
     roundJustStarted: true,
@@ -112,7 +113,7 @@ class Round extends Component {
     // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
-    
+
     this.whosTurn(null)
     this.storeActionStarter()
 
@@ -144,7 +145,7 @@ class Round extends Component {
   newPlayers() {
 
     for (let i = 0; i < players.length; i++) {
-      this.state.players.push(new PlayerStats(players[i].name, players[i].stack, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].inPot,players[i].inBetRound, players[i].key))
+      this.state.players.push(new PlayerStats(players[i].name, players[i].stack, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].inPot, players[i].inBetRound, players[i].key))
       // this.state.players.push(players[i])
       this.state.playersInHand.push(players[i].key)
     }
@@ -159,18 +160,18 @@ class Round extends Component {
     })
 
 
-    for (var i = 0 ; i < this.state.players.length ; i++) {
+    for (var i = 0; i < this.state.players.length; i++) {
       if (this.state.players[i].sb) {
-       
-        this.state.players[i].stack-=this.state.minBet
-        this.state.players[i].inPot+=this.state.minBet
-        this.state.players[i].inBetRound+=this.state.minBet
+
+        this.state.players[i].stack -= this.state.minBet
+        this.state.players[i].inPot += this.state.minBet
+        this.state.players[i].inBetRound += this.state.minBet
       }
 
       if (this.state.players[i].bb) {
-        this.state.players[i].stack-=this.state.minBet*2
-        this.state.players[i].inPot+=this.state.minBet*2
-        this.state.players[i].inBetRound+=this.state.minBet*2
+        this.state.players[i].stack -= this.state.minBet * 2
+        this.state.players[i].inPot += this.state.minBet * 2
+        this.state.players[i].inBetRound += this.state.minBet * 2
       }
     }
 
@@ -180,22 +181,25 @@ class Round extends Component {
     if (this.state.playersInHand.length < 2) {
       console.log(`${this.state.playersInHand[0]} wins!`)
       const player = this.checkPlayer(this.state.playersInHand[0])
-      console.log(player.stack, parseFloat(this.state.pot))
-      player.stack+=parseFloat(this.state.pot)
+      
+      player.stack += parseFloat(this.state.pot)
       this.setState({
         inPot: 0
       })
     }
   }
-
+  
+  // Action starter will tell us when to increment to next round
   storeActionStarter() {
     this.setState({
-      actionStarter: this.state.action
+      actionStarter: this.state.playersInHand.length
     })
   }
-
+  
+  // Check to see if we should move to next round of betting
   checkBetRound() {
-    if (this.state.action === this.state.actionStarter) {
+
+    if (this.state.playerMoves === this.state.actionStarter) {
       this.flop()
     }
   }
@@ -204,7 +208,7 @@ class Round extends Component {
 
   checkPlayer(id) {
 
-    for (var i = 0 ; i < this.state.players.length; i++) {
+    for (var i = 0; i < this.state.players.length; i++) {
 
       if (this.state.players[i].id === id) {
 
@@ -214,45 +218,46 @@ class Round extends Component {
   }
 
 
-  whosTurn(id) {
+whosTurn(id) {
     // check for winner everytime action moves
     this.checkWin()
 
-  if (id) {
-// normal behavior
+    if (id) {
+      // normal behavior
     this.setState({
-      [id]: "player__waiting",
-      [this.state.playersInHand[this.state.action]]: "player__action",
-      actionID: this.state.playersInHand[this.state.action]
+        [id]: "player__waiting",
+        [this.state.playersInHand[this.state.action]]: "player__action",
+        actionID: this.state.playersInHand[this.state.action],
+        playerMoves: this .state.playerMoves + 1
+      })
+      // Handle the loss of a player in the playersInHand array
+    } else {
+      this.setState({
+        [this.state.playersInHand[this.state.action]]: "player__action",
+        actionID: this.state.playersInHand[this.state.action],
+        playerMoves: this .state.playerMoves + 1
+      })
+    }
 
-    })
-    // Handle the loss of a player in the playersInHand array
-  } else {
+    if (!this.state.roundJustStarted) {
+      this.checkBetRound()
+    }
+
     this.setState({
-      [this.state.playersInHand[this.state.action]]: "player__action",
-      actionID: this.state.playersInHand[this.state.action]
+      roundJustStarted: false
     })
-  }
-
-  if (!this.state.roundJustStarted) {
-    this.checkBetRound()
-  }
-
-this.setState({
-  roundJustStarted: false
-})
   }
 
   async moveAction(id, first) {
 
     // If the last player in the array invokes this function...
     if (this.state.action >= this.state.playersInHand.length - 1 || first === 0) {
-     await  this.setState({
+      await this.setState({
         action: 0
       })
     } else {
-          
-    await  this.setState({
+
+      await this.setState({
         action: this.state.action + 1
       })
     }
@@ -270,11 +275,11 @@ this.setState({
     const ifFirst = this.state.action
     // don't move the action if anyone but the first or last person folded
     if (ifFirst !== 0 && ifFirst !== this.state.playersInHand.length) {
-      console.log(ifFirst,this.state.playersInHand.length )
+      console.log(ifFirst, this.state.playersInHand.length)
       this.whosTurn(null)
     } else {
-    // Pass null so whosTurn function knows player folded
-    this.moveAction(null, ifFirst)
+      // Pass null so whosTurn function knows player folded
+      this.moveAction(null, ifFirst)
     }
 
   }
@@ -291,7 +296,7 @@ this.setState({
 
     if (id === this.state.playersInHand[this.state.action]) {
       this.outOfHand(id)
-      
+
 
     } else {
       console.log("It ain't yo turn")
@@ -299,56 +304,56 @@ this.setState({
 
   }
 
- async call(id) {
+  async call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
       // Update the players stack as well as the pot
 
-        const player = this.checkPlayer(id)
+      const player = this.checkPlayer(id)
 
-          // Update player's money in pot
-          player.inPot += this.state.currBet - player.inBetRound
-          // Update players stack
-          player.stack -= this.state.currBet - player.inBetRound
-          
-         await this.setState({
-            pot: (parseFloat(this.state.pot) + this.state.currBet - player.inBetRound).toFixed(2)
-          })
+      // Update player's money in pot
+      player.inPot += this.state.currBet - player.inBetRound
+      // Update players stack
+      player.stack -= this.state.currBet - player.inBetRound
+
+      await this.setState({
+        pot: (parseFloat(this.state.pot) + this.state.currBet - player.inBetRound).toFixed(2)
+      })
 
       this.moveAction(id, null)
     }
   }
 
- async raise(id) {
+  async raise(id) {
     if (id === this.state.playersInHand[this.state.action]) {
       const player = this.checkPlayer(id)
-          if (this.state[player.name] < this.state.currBet || !this.state[player.name]) {
-            console.log("You need to raise to at least double the current bet")
-          } else if (this.state[player.name] > player.stack) {
-            console.log("Get yo money up")
-          } else {
-            player.inPot += this.state[player.name]
-            player.stack -= this.state[player.name]
+      if (this.state[player.name] < this.state.currBet || !this.state[player.name]) {
+        console.log("You need to raise to at least double the current bet")
+      } else if (this.state[player.name] > player.stack) {
+        console.log("Get yo money up")
+      } else {
+        player.inPot += this.state[player.name]
+        player.stack -= this.state[player.name]
 
-            await this.setState({
-              pot: (parseFloat(this.state.pot) + parseFloat(this.state[player.name])).toFixed(2),
-              currBet: parseFloat(this.state[player.name])
-            })
-            this.moveAction(id, null)
+        await this.setState({
+          pot: (parseFloat(this.state.pot) + parseFloat(this.state[player.name])).toFixed(2),
+          currBet: parseFloat(this.state[player.name])
+        })
+        this.moveAction(id, null)
 
-          }
-      
+      }
+
     }
   }
 
   handleInputChange = event => {
-   
-      const {id, name, value } = event.target;
 
-      if (parseInt(event.target.id) === this.state.playersInHand[this.state.action]) {
-        this.setState({
-          [name]: value
-        });
-      }
+    const { id, name, value } = event.target;
+
+    if (parseInt(event.target.id) === this.state.playersInHand[this.state.action]) {
+      this.setState({
+        [name]: value
+      });
+    }
 
   };
 
@@ -363,7 +368,7 @@ this.setState({
     this.setState({
       betRound: this.state.betRound + 1
     })
-// Will need to reinitialize moneyInRound
+    // Will need to reinitialize moneyInRound
   }
 
   turnRiver() {
@@ -385,23 +390,23 @@ this.setState({
         <h3>Players:</h3>
         {this.state.players.map(player =>
           <div>
-          <Player
-            name={player.name}
-            wealth={player.wealth}
-            hand={player.hand}
-            key={player.key}
-            id={player.key}
-            stack={player.stack}
-            inPot={player.inPot}
-            currBet={this.state.currBet}
-            fold={() => this.fold(player.id)}
-            call={() => this.call(player.id)}
-            raise={() => this.raise(player.id)}
-            status={this.state[player.id]}
-            action={this.state.actionID}
-          />
-          
-          <Input onChange={this.handleInputChange} type="number" step={.1} name={player.name} id={player.id}/>
+            <Player
+              name={player.name}
+              wealth={player.wealth}
+              hand={player.hand}
+              key={player.key}
+              id={player.key}
+              stack={player.stack}
+              inPot={player.inPot}
+              currBet={this.state.currBet}
+              fold={() => this.fold(player.id)}
+              call={() => this.call(player.id)}
+              raise={() => this.raise(player.id)}
+              status={this.state[player.id]}
+              action={this.state.actionID}
+            />
+
+            <Input onChange={this.handleInputChange} type="number" step={.1} name={player.name} id={player.id} />
           </div>
         )}
 
