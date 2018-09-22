@@ -178,6 +178,17 @@ class Round extends Component {
     }
   }
 
+  checkPlayer(id) {
+
+    for (var i = 0 ; i < this.state.players.length; i++) {
+
+      if (this.state.players[i].id === id) {
+
+        return this.state.players[i]
+      }
+    }
+  }
+
 
   whosTurn(id) {
     // check for winner everytime action moves
@@ -261,19 +272,18 @@ class Round extends Component {
  async call(id) {
     if (id === this.state.playersInHand[this.state.action]) {
       // Update the players stack as well as the pot
-      for (var i = 0 ; i < this.state.players.length ; i++) {
-        if (id === this.state.players[i].id) {
-          console.log(this.state.currBet, this.state.players[i].inBetRound)
+
+        const player = this.checkPlayer(id)
+
           // Update player's money in pot
-          this.state.players[i].inPot += this.state.currBet - this.state.players[i].inBetRound
+          player.inPot += this.state.currBet - player.inBetRound
           // Update players stack
-          this.state.players[i].stack -= this.state.currBet - this.state.players[i].inBetRound
+          player.stack -= this.state.currBet - player.inBetRound
           
          await this.setState({
-            pot: (parseFloat(this.state.pot) + this.state.currBet - this.state.players[i].inBetRound).toFixed(2)
+            pot: (parseFloat(this.state.pot) + this.state.currBet - player.inBetRound).toFixed(2)
           })
-        }
-      }
+
       this.moveAction(id, null)
     }
   }
