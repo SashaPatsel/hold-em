@@ -111,6 +111,12 @@ body {
   font-weight: 400px;
   line-height: 1.7; }
 
+.ui-card {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 30rem;
+  height: 40rem;
+  border-radius: 5px; }
+
 .player__action {
   background-color: orangered; }
 
