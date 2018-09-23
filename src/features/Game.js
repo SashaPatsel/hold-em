@@ -1,6 +1,48 @@
 import React, {Component} from "react";
 import Round from "./Round";
 import Player from "./Player";
+import firebase from "../data/Firebase"
+
+const db = firebase.firestore();
+
+
+const firestore = firebase.firestore();
+  const settings = { timestampsInSnapshots: true};
+  firestore.settings(settings);
+
+  db.collection("users").add({
+    name: "sasha",
+    dob: "12/29/93"
+  }); 
+  
+// Create a variable to reference the database.
+var database = firebase.database();
+
+// -------------------------------------------------------------- (CRITICAL - BLOCK) --------------------------- //
+// connectionsRef references a specific location in our database.
+// All of our connections will be stored in this directory.
+var connectionsRef = database.ref("/connections");
+
+// '.info/connected' is a special location provided by Firebase that is updated every time
+// the client's connection state changes.
+// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+var connectedRef = database.ref(".info/connected");
+
+// When the client's connection state changes...
+connectedRef.on("value", function(snap) {
+
+  // If they are connected..
+  if (snap.val()) {
+
+    // Add user to the connections list.
+    var con = connectionsRef.push(true);
+
+    // Remove user from the connection list when they disconnect.
+    con.onDisconnect().remove();
+  }
+});
+
+
 
 class Game extends Component {
   state = {
@@ -24,6 +66,8 @@ class Game extends Component {
     this.newPlayer()
     // New Round is called after blinds are determined
     this.determineBlinds()
+
+
 
   }
 
