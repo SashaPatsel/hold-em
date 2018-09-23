@@ -113,8 +113,9 @@ class Round extends Component {
     // Deal one card to each player, then repeat
     this.dealCard()
     this.dealCard()
-
+    // Set the action on a specific player
     this.whosTurn(null)
+    // Store the first player to act so we know when to deal the flop
     this.storeActionStarter()
 
   }
@@ -143,7 +144,7 @@ class Round extends Component {
   }
 
   newPlayers() {
-
+    // Create non-react classes to store player logic
     for (let i = 0; i < players.length; i++) {
       this.state.players.push(new PlayerStats(players[i].name, players[i].stack, players[i].dealer, players[i].smallBlind, players[i].bigBlind, players[i].inPot, players[i].inBetRound, players[i].key))
       // this.state.players.push(players[i])
@@ -161,13 +162,14 @@ class Round extends Component {
 
 
     for (var i = 0; i < this.state.players.length; i++) {
+      // Pay small blind
       if (this.state.players[i].sb) {
 
         this.state.players[i].stack -= this.state.minBet
         this.state.players[i].inPot += this.state.minBet
         this.state.players[i].inBetRound += this.state.minBet
       }
-
+      // pay big blind
       if (this.state.players[i].bb) {
         this.state.players[i].stack -= this.state.minBet * 2
         this.state.players[i].inPot += this.state.minBet * 2
@@ -198,8 +200,9 @@ class Round extends Component {
   
   // Check to see if we should move to next round of betting
   checkBetRound() {
-    console.log(this.state.playerMoves, this.state.actionStarter)
+    // When everyone has acted
     if (this.state.playerMoves === this.state.actionStarter) {
+      // Determine who t
       this.storeActionStarter()
       this.setState({
         betRound: this.state.betRound + 1,
