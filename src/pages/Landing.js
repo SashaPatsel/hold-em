@@ -1,10 +1,14 @@
 import React from "react"
 import UICard from "../components/cards/UICard"
 
+
+// PAGE GOALS:
+// 1. To direct users to either create or join a table
 const Landing = props => (
-<div>
-  <a href="/create"></a>
-  <a href="/join"></a>
+<div className="landing">
+  <a href="/create">Create</a>
+  <br/>
+  <a href="/join">Join</a>
 </div>  
 )
 

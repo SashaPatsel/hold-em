@@ -431,8 +431,8 @@ whosTurn(id) {
               status={this.state[player.id]}
               action={this.state.actionID}
             />
-
-            <Input onChange={this.handleInputChange} type="number" step={.1} name={player.name} id={player.id} />
+              {/* Step should be set in state */}
+            <Input onChange={this.handleInputChange} type="number" min={0} step={.1} name={player.name} id={player.id} />
           </div>
         )}
 

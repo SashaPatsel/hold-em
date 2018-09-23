@@ -27,10 +27,10 @@ var connectedRef = database.ref(".info/connected");
 
 // When the client's connection state changes...
 connectedRef.on("value", function(snap) {
-  db.collection("users").add({
-    name: "sasha",
-    dob: "12/29/93"
-  }); 
+  // db.collection("users").add({
+  //   name: "sasha",
+  //   dob: "12/29/93"
+  // }); 
   // If they are connected..
   if (snap.val()) {
 
