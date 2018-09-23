@@ -10,10 +10,7 @@ const firestore = firebase.firestore();
   const settings = { timestampsInSnapshots: true};
   firestore.settings(settings);
 
-  db.collection("users").add({
-    name: "sasha",
-    dob: "12/29/93"
-  }); 
+
   
 // Create a variable to reference the database.
 var database = firebase.database();
@@ -30,7 +27,10 @@ var connectedRef = database.ref(".info/connected");
 
 // When the client's connection state changes...
 connectedRef.on("value", function(snap) {
-
+  db.collection("users").add({
+    name: "sasha",
+    dob: "12/29/93"
+  }); 
   // If they are connected..
   if (snap.val()) {
 
