@@ -49,7 +49,7 @@ class Create extends Component {
   .catch(function(error) {
       console.error("Error adding document: ", error);
   });
-  
+  window.location.href = '/game';
   }  
 
   render() {
