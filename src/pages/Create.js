@@ -1,5 +1,10 @@
 import React, { Component } from "react"
+import firebase from "../data/Firebase"
+
 import Input from "../components/Form/Input"
+
+const db = firebase.firestore();
+
 
 // PAGE GOALS:
 // 1. To create a table with user specifications
@@ -28,7 +33,23 @@ class Create extends Component {
 
   submitForm = e => {
     e.preventDefault()
-    console.log(this.state)
+    db.collection("tables").add({
+      tableName: this.state.tableName,
+      maxPlayers: this.state.maxPlayers,
+      bb: this.state.bb,
+      sb: this.state.sb,
+      buyBack: this.state.buyBack,
+      public: this.state.public,
+      minBuyIn: this.state.minBuyIn,
+      maxBuyIn: this.state.maxPlayers
+  })
+  .then(function(docRef) {
+      console.log(" docRef", docRef);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+  
   }  
 
   render() {
