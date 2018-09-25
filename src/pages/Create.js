@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import firebase from "../data/Firebase"
+import deck from "../data/deck"
+
 
 import Input from "../components/Form/Input"
 
@@ -44,6 +46,7 @@ class Create extends Component {
       public: this.state.public,
       minBuyIn: this.state.minBuyIn,
       maxBuyIn: this.state.maxPlayers,
+      deck: deck,
       players: []
   })
   .then(function(docRef) {
@@ -56,7 +59,7 @@ class Create extends Component {
   .catch(function(error) {
       console.error("Error adding document: ", error);
   });
-  // window.location.href = '/game';
+  
   }  
 
   submitPlayerForm = e => {
@@ -65,8 +68,17 @@ class Create extends Component {
     db.collection("tables").doc(this.state.docID).update({
       players: [{
         name: this.state.playerName,
-        buyIn: this.state.buyIn
+        stack: this.state.buyIn,
+        host: true,
+        dealer: true,
+        smallBlind: false,
+        bigBlind: false,
+        inPot: 0,
+        inBetRound: 0,
+        key: 1
       }]
+    }).then(docRef => {
+      window.location.href = '/game';
     })
   }
 

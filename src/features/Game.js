@@ -27,15 +27,11 @@ var connectedRef = database.ref(".info/connected");
 
 // When the client's connection state changes...
 connectedRef.on("value", function(snap) {
-  // db.collection("users").add({
-  //   name: "sasha",
-  //   dob: "12/29/93"
-  // }); 
   // If they are connected..
   if (snap.val()) {
 
     // Add user to the connections list.
-    var con = connectionsRef.push(true);
+    var con = connectionsRef.push("94dmGsiCmKBIs4dgi9DK");
 
     // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
