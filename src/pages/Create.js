@@ -22,6 +22,7 @@ class Create extends Component {
   }
 
   handleChange = e => {
+
    const {name, value} = e.target
     this.setState({
       [name]: value,
@@ -31,7 +32,8 @@ class Create extends Component {
 
   }
 
-  submitForm = e => {
+  submitTableForm = e => {
+    const table = this
     e.preventDefault()
     db.collection("tables").add({
       tableName: this.state.tableName,
@@ -41,16 +43,32 @@ class Create extends Component {
       buyBack: this.state.buyBack,
       public: this.state.public,
       minBuyIn: this.state.minBuyIn,
-      maxBuyIn: this.state.maxPlayers
+      maxBuyIn: this.state.maxPlayers,
+      players: []
   })
   .then(function(docRef) {
-      console.log(" docRef", docRef);
+      console.log(" docRef", docRef.id);
+
+      table.setState({
+        docID: docRef.id
+      })
   })
   .catch(function(error) {
       console.error("Error adding document: ", error);
   });
-  window.location.href = '/game';
+  // window.location.href = '/game';
   }  
+
+  submitPlayerForm = e => {
+    e.preventDefault()
+    console.log(this.state)
+    db.collection("tables").doc(this.state.docID).update({
+      players: [{
+        name: this.state.playerName,
+        buyIn: this.state.buyIn
+      }]
+    })
+  }
 
   render() {
     return (
@@ -60,7 +78,7 @@ class Create extends Component {
         Max Buy-In: {this.state.maxBuyIn}
 
 
-        <form onSubmit={this.submitForm} >
+        <form onSubmit={this.submitTableForm} >
           <Input name="tableName" label="Table Name" type="text" onChange={this.handleChange}/>
           <Input name="maxPlayers" label="Max Players" type="number" max={9} onChange={this.handleChange}/>
           <Input name="bb" label="Big Blind" type="number"  step={.05} min={.1} onChange={this.handleChange}/>
@@ -77,6 +95,14 @@ class Create extends Component {
           </select>
           <Input type="submit" value="Create Table"/>
         </form >
+
+        <br/><br/><br/><br/><br/><br/><br/>
+        
+        <form onSubmit={this.submitPlayerForm}>
+          <Input name="playerName" label="User Name" type="text" onChange={this.handleChange}/>
+          <Input name="buyIn" label="Buy In" min={this.state.minBuyIn} max={this.state.maxBuyIn} type="number" onChange={this.handleChange}/>
+          <Input type="submit" value="Join Table"/>
+        </form>  
       </div>
     )
   }
