@@ -123,5 +123,11 @@ body {
 .player__out {
   background-color: #969696; }
 
+.table-card {
+  background-color: black;
+  color: white;
+  width: 20rem;
+  margin-bottom: 1rem; }
+
 .landing {
   font-size: 2rem; }

@@ -100,7 +100,7 @@ class Round extends Component {
 
   getGame() {
     db.collection("tables").doc(localStorage.getItem("table")).get().then(doc => {
-      return doc.data()
+      console.log(doc.data()) 
     })
   }
 
@@ -113,7 +113,7 @@ class Round extends Component {
 
 
   async startRound() {
-
+this.getGame()
     // Shuffle the Deck
     this.shuffle(this.state.deck)
 
