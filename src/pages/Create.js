@@ -65,8 +65,8 @@ class Create extends Component {
   submitPlayerForm = e => {
     e.preventDefault()
     console.log(this.state)
-    db.collection("tables").doc(this.state.docID).update({
-      players: [{
+    db.collection("tables").doc(this.state.docID).collection("players").add({
+
         name: this.state.playerName,
         stack: this.state.buyIn,
         host: true,
@@ -76,11 +76,11 @@ class Create extends Component {
         inPot: 0,
         inBetRound: 0,
         key: 1
-      }]
+
     }).then(docRef => {
       console.log(docRef)
       localStorage.setItem("table", this.state.docID)
-  
+      localStorage.setItem("player", docRef.id)
       window.location.href = '/game';
     })
   }

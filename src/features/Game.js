@@ -33,7 +33,6 @@ class Game extends Component {
         maxBuyIn: doc.data().maxBuyIn,
         minBuyIn: doc.data().minBuyIn,
         maxPlayers: doc.data().maxPlayers,
-        players: doc.data().players,
         buyBack: doc.data().buyBack
       })
       console.log(this.state)

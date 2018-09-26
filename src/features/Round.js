@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import deck from "../data/deck.json"
 import Player from "./Player"
 import PlayerStats from "./PlayerStats"
-
 import Input from "../components/Form/Input"
+import firebase from "../data/Firebase"
+
+const db = firebase.firestore();
 
 
 const players = [
@@ -96,6 +98,18 @@ class Round extends Component {
 
   }
 
+  getGame() {
+    db.collection("tables").doc(localStorage.getItem("table")).get().then(doc => {
+      return doc.data()
+    })
+  }
+
+  getPlayer() {
+    db.collection("tables").doc(localStorage.getItem("table")).collection(localStorage.getItem("player")).get().then(doc => {
+      return doc.data()
+    })
+  }
+
 
 
   async startRound() {
@@ -150,6 +164,9 @@ class Round extends Component {
       // this.state.players.push(players[i])
       this.state.playersInHand.push(players[i].key)
     }
+
+    // const players = this.fireRef().players
+    
 
   }
 
