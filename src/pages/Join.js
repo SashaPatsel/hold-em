@@ -33,16 +33,29 @@ class Join extends Component {
     console.log(this.state)
   }
 
-  handleChange= e => {
+  handleChange = e => {
     const { name, value } = e.target
     this.setState({
       [name]: value
     })
   }
 
-  chooseTable() {
-    // localStorage.setItem("table", this.state.docID)
-    // localStorage.setItem("player", docRef.id)
+  chooseTable = id => {
+
+    db.collection("tables").doc(id).collection("players").add({
+      name: this.state.name,
+      stack: this.state.buyIn,
+      host: false,
+      dealer: true,
+      smallBlind: false,
+      bigBlind: false,
+      inPot: 0,
+      inBetRound: 0
+    }).then(docRef => {
+    localStorage.setItem("table", id)
+    localStorage.setItem("player", docRef.id)
+    })
+
   }
 
 
@@ -50,7 +63,7 @@ class Join extends Component {
     return (
       <div>
         {this.state.tables.map(doc => (
-          <TableCard onChange={this.handleChange} onSubmit={this.chooseTable} name={doc.tableName} key={doc.id}/>
+          <TableCard onChange={this.handleChange} onClick={() => this.chooseTable(doc.id)} name={doc.tableName} key={doc.id}/>
         ))}
       </div>
     )

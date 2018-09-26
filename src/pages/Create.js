@@ -74,8 +74,7 @@ class Create extends Component {
         smallBlind: false,
         bigBlind: false,
         inPot: 0,
-        inBetRound: 0,
-        key: 1
+        inBetRound: 0
 
     }).then(docRef => {
       console.log(docRef)
