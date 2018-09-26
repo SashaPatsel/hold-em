@@ -6,40 +6,6 @@ import firebase from "../data/Firebase"
 const db = firebase.firestore();
 
 
-const firestore = firebase.firestore();
-  const settings = { timestampsInSnapshots: true};
-  firestore.settings(settings);
-
-
-  
-// Create a variable to reference the database.
-var database = firebase.database();
-
-// -------------------------------------------------------------- (CRITICAL - BLOCK) --------------------------- //
-// connectionsRef references a specific location in our database.
-// All of our connections will be stored in this directory.
-var connectionsRef = database.ref("/connections");
-
-// '.info/connected' is a special location provided by Firebase that is updated every time
-// the client's connection state changes.
-// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
-var connectedRef = database.ref(".info/connected");
-
-// When the client's connection state changes...
-connectedRef.on("value", function(snap) {
-  // If they are connected..
-  if (snap.val()) {
-
-    // Add user to the connections list.
-    var con = connectionsRef.push("94dmGsiCmKBIs4dgi9DK");
-
-    // Remove user from the connection list when they disconnect.
-    con.onDisconnect().remove();
-  }
-});
-
-
-
 class Game extends Component {
   state = {
     totalStakes: 0,
@@ -50,16 +16,12 @@ class Game extends Component {
   }
 
   componentDidMount() {
-    // Add the players to the game
-    this.state.keyCount++
 
-    // SET STATE NOT WORKING?!!?!
-    this.setState({
-      keyCount: this.state.keyCount+1
-    })
     
     console.log("Game",this.state)
-    this.newPlayer()
+    db.collection("tables").doc(localStorage.getItem("table")).get().then(doc => {
+      console.log(doc.data())
+    })
     // New Round is called after blinds are determined
     this.determineBlinds()
 
@@ -68,62 +30,7 @@ class Game extends Component {
   }
 
   
-  newPlayer() {
-    this.state.players.push( <Player name="Sasha" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {true}
-    smallBlind= {false}
-    bigBlind= {false} 
-    key={this.state.keyCount}
-    />)
-    this.state.keyCount++
 
-    this.state.players.push( <Player name="Dilsey" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {true}
-    bigBlind= {false} 
-    key={this.state.keyCount}
-    />)
-    this.state.keyCount++
-
-    this.state.players.push( <Player name="Brian" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {false}
-    bigBlind= {true} 
-      key={this.state.keyCount}
-    />)
-    this.state.keyCount++
-    this.state.players.push( <Player name="Bax" wealth={10} hand={[]}
-    currBet= {0}
-    inPot= {0}
-    fold= {false}
-    bet= {false}
-    raise= {false}
-    call= {false}
-    dealer= {false}
-    smallBlind= {false}
-    bigBlind= {false} 
-    key={this.state.keyCount}
-    />)
-    this.state.keyCount++
-  }
 
   determineBlinds() {
     if (this.state.blinds[0] === 0) {

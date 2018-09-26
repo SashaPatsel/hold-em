@@ -78,6 +78,9 @@ class Create extends Component {
         key: 1
       }]
     }).then(docRef => {
+      console.log(docRef)
+      localStorage.setItem("table", this.state.docID)
+  
       window.location.href = '/game';
     })
   }
