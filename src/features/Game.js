@@ -8,11 +8,15 @@ const db = firebase.firestore();
 
 class Game extends Component {
   state = {
-    totalStakes: 0,
-    currRound: "",
+    tableName: "",
+    bb: 0,
+    sb: 0,
+    deck: [],
+    maxBuyIn: 0,
+    minBuyIn: 0,
+    maxPlayers: 0,
     players: [],
-    keyCount: 1,
-    blinds: [0,1,2]
+    buyBack:false
   }
 
   componentDidMount() {
@@ -20,7 +24,19 @@ class Game extends Component {
     
     console.log("Game",this.state)
     db.collection("tables").doc(localStorage.getItem("table")).get().then(doc => {
-      console.log(doc.data())
+      
+      this.setState({
+        tableName: doc.data().tableName,
+        bb: doc.data().bb,
+        sb: doc.data().sb,
+        deck: doc.data().deck,
+        maxBuyIn: doc.data().maxBuyIn,
+        minBuyIn: doc.data().minBuyIn,
+        maxPlayers: doc.data().maxPlayers,
+        players: doc.data().players,
+        buyBack: doc.data().buyBack
+      })
+      console.log(this.state)
     })
     // New Round is called after blinds are determined
     this.newRound()
@@ -33,7 +49,7 @@ class Game extends Component {
   newRound() {
 
     this.setState({
-      currRound: <Round dealer={0}
+      currRound: <Round dealer={0} 
       />
     })
   
