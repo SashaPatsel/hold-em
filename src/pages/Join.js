@@ -46,14 +46,15 @@ class Join extends Component {
       name: this.state.name,
       stack: this.state.buyIn,
       host: false,
-      dealer: true,
+      dealer: false,
       smallBlind: false,
       bigBlind: false,
       inPot: 0,
       inBetRound: 0
     }).then(docRef => {
-    localStorage.setItem("table", id)
-    localStorage.setItem("player", docRef.id)
+      localStorage.setItem("table", id)
+      localStorage.setItem("player", docRef.id)
+      window.location.href = '/game';
     })
 
   }

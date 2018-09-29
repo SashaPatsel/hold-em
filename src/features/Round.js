@@ -58,11 +58,12 @@ const players = [
 
 class Round extends Component {
   state = {
-    deck: deck,
+    deck: this.props.deck,
     pot: 0,
     houseCards: [],
     minBet: .1,
-    players: [],
+    players: this.props.players,
+    gameRef: {},
     playersInHand: [],
     actionStarter: 0,
     playerMoves: 0,
@@ -98,24 +99,29 @@ class Round extends Component {
 
   }
 
-  getGame() {
-    db.collection("tables").doc(localStorage.getItem("table")).get().then(doc => {
-      console.log(doc.data()) 
+  async getGame() {
+    let game;
+    await db.collection("tables").doc(localStorage.getItem("table")).get().then(doc => {
+     game = doc.data()
     })
+    return game
   }
 
-  getPlayer() {
-    db.collection("tables").doc(localStorage.getItem("table")).collection(localStorage.getItem("player")).get().then(doc => {
-      return doc.data()
+  async getPlayer() {
+    let player;
+   await db.collection("tables").doc(localStorage.getItem("table")).collection(localStorage.getItem("player")).get().then(doc => {
+      player = doc
     })
+    return player
   }
+
 
 
 
   async startRound() {
-this.getGame()
+    await this.getGame()
     // Shuffle the Deck
-    this.shuffle(this.state.deck)
+    // this.shuffle(this.state.deck)
 
     // Move read-only player stats to Round state so that they can be changed
     this.newPlayers()
@@ -131,31 +137,10 @@ this.getGame()
     this.whosTurn(null)
     // Store the first player to act so we know when to deal the flop
     this.storeActionStarter()
-
   }
 
 
-  //Knuth Shuffle
-  shuffle = (arr) => {
-    let currentIndex = arr.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = arr[currentIndex];
-      arr[currentIndex] = arr[randomIndex];
-      arr[randomIndex] = temporaryValue;
-    }
-
-    this.setState({
-      cards: arr
-    });
-  }
 
   newPlayers() {
     // Create non-react classes to store player logic
@@ -321,6 +306,14 @@ whosTurn(id) {
   }
 
   dealCard() {
+    this.getGame().then(game => {
+      console.log(game)
+    })
+
+    this.getPlayer({dealer: true}).then(player => {
+      console.log(player)
+    })
+
     for (let i = 0; i < this.state.players.length; i++) {
       this.state.players[i].hand.push(this.state.deck.pop())
     }
@@ -383,22 +376,17 @@ whosTurn(id) {
           currBet: parseFloat(this.state[player.name])
         })
         this.moveAction(id, null)
-
       }
-
     }
   }
 
   handleInputChange = event => {
-
     const { id, name, value } = event.target;
-
     if (parseInt(event.target.id) === this.state.playersInHand[this.state.action]) {
       this.setState({
         [name]: value
       });
     }
-
   };
 
   flop() {
@@ -417,9 +405,6 @@ whosTurn(id) {
 
     this.state.houseCards.push(this.state.deck.pop())
   }
-
-
-
 
 
   render() {

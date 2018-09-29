@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Button from "../components/Button"
+import firebase from "../data/Firebase"
 
+const db = firebase.firestore();
 
 class Player extends Component {
 
@@ -30,6 +32,12 @@ class Player extends Component {
     })
   }
 
+  getHand() {
+    db.collection("tables").doc(localStorage.getItem("table")).collection("players").get().then(doc => {
+
+    })
+  }
+
   renderHand() {
     // switch 
     return (
@@ -43,7 +51,6 @@ class Player extends Component {
   }
 
   payBlind() {
-
     if (this.state.smallBlind === true) {
       this.setState({
         wealth: this.state.wealth - this.state.minBet,
