@@ -4,6 +4,7 @@ import Player from "./Player"
 import PlayerStats from "./PlayerStats"
 import Input from "../components/Form/Input"
 import firebase from "../data/Firebase"
+import CardFront from "../components/cards/CardFront";
 
 const db = firebase.firestore();
 
@@ -86,7 +87,6 @@ class Round extends Component {
     10: "player__waiting",
     11: "player__waiting",
     12: "player__waiting"
-
   }
 
 
@@ -131,8 +131,8 @@ class Round extends Component {
     // Add blinds
     this.payBlinds()
     // Deal one card to each player, then repeat
-    this.dealCard()
-    this.dealCard()
+    // this.dealCard()
+    // this.dealCard()
     // Set the action on a specific player
     this.whosTurn(null)
     // Store the first player to act so we know when to deal the flop
@@ -256,14 +256,10 @@ whosTurn(id) {
         actionID: this.state.playersInHand[this.state.action]
       })
     }
-
     if (!this.state.roundJustStarted) {
       this.checkBetRound()
 
     }
-      
-    
-
     this.setState({
       roundJustStarted: false
     })
@@ -410,6 +406,7 @@ whosTurn(id) {
   render() {
     return (
       <div>
+        <CardFront/>
         Action on player &nbsp;
         {this.state.action}
         <h3>Pot:</h3>

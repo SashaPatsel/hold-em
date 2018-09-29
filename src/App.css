@@ -117,6 +117,9 @@ body {
   height: 40rem;
   border-radius: 5px; }
 
+.card-front {
+  height: 40rem; }
+
 .player__action {
   background-color: orangered; }
 

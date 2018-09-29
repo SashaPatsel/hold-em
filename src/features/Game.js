@@ -39,7 +39,7 @@ class Game extends Component {
 
     db.collection("tables").doc(localStorage.getItem("table")).collection("players").doc(localStorage.getItem("player")).get().then(player => {
       if (player.data().dealer === true) {
-        this.shuffle()
+        this.shuffle(this.state.deck)
       }
     })
     // New Round is called after blinds are determined
