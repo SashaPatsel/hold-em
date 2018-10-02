@@ -64,7 +64,7 @@ class Join extends Component {
     return (
       <div>
         {this.state.tables.map(doc => (
-          <TableCard onChange={this.handleChange} onClick={() => this.chooseTable(doc.id)} name={doc.tableName} key={doc.id}/>
+          <TableCard onChange={this.handleChange} onClick={() => this.chooseTable(doc.id)} name={doc.table.tableName} key={doc.id}/>
         ))}
       </div>
     )

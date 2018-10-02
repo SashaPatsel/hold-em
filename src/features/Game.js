@@ -37,11 +37,7 @@ class Game extends Component {
     })
     this.getPlayers()
 
-    db.collection("tables").doc(localStorage.getItem("table")).collection("players").doc(localStorage.getItem("player")).get().then(player => {
-      if (player.data().dealer === true) {
-        this.shuffle(this.state.deck)
-      }
-    })
+
     // New Round is called after blinds are determined
     this.newRound()
   }
@@ -56,23 +52,6 @@ class Game extends Component {
     })
   }
 
-    //Knuth Shuffle
-    shuffle = (arr) => {
-      let currentIndex = arr.length, temporaryValue, randomIndex;
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        // And swap it with the current element.
-        temporaryValue = arr[currentIndex];
-        arr[currentIndex] = arr[randomIndex];
-        arr[randomIndex] = temporaryValue;
-      }
-      db.collection("tables").doc(localStorage.getItem("table")).set({
-        deck: arr
-      })
-    }
 
   newRound() {
     this.setState({

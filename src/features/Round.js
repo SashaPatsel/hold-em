@@ -113,8 +113,10 @@ class Round extends Component {
    await db.collection("tables").doc(localStorage.getItem("table")).collection("players").get().then(doc => {
      const playerDocs = []
      doc.forEach(d => {
-       console.log(d.data())
-       playerDocs.push(d.data())
+      //  Make copy to add new key of docRef
+       const obj = d.data()
+       obj["docRef"] = d.id
+       playerDocs.push(obj)
      })
      this.setState({
        players: playerDocs
@@ -130,10 +132,15 @@ class Round extends Component {
     await this.getPlayers()
     await this.getGame()
     // Shuffle the Deck
-    // this.shuffle(this.state.deck)
+    this.state.players.map(player => {
+      
+      if (player.docRef === localStorage.getItem("player")) {
+        this.shuffle(deck)
+      }
+    })
 
     // Move read-only player stats to Round state so that they can be changed
-    this.newPlayers()
+    // this.newPlayers()
     await this.setState({
       action: this.state.dealer + 3
     })
@@ -149,6 +156,31 @@ class Round extends Component {
   }
 
 
+    //Knuth Shuffle
+    shuffle = (arr) => {
+      let table
+
+      this.getGame().then(t => {
+        table = t
+      
+    
+      let currentIndex = arr.length, temporaryValue, randomIndex;
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = arr[currentIndex];
+        arr[currentIndex] = arr[randomIndex];
+        arr[randomIndex] = temporaryValue;
+      }
+      table.deck = arr
+      db.collection("tables").doc(localStorage.getItem("table")).set({
+        table
+      })
+    })
+    }
 
 
   newPlayers() {
