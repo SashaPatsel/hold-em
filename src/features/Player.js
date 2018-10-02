@@ -95,7 +95,7 @@ class Player extends Component {
       <div className="player">
         <div className={this.props.status}>
           <h4>{this.state.name}:</h4>
-          {this.state.hand.length > 0 ? this.renderHand() : "Wait to be dealt your hand"}
+          {/* {this.state.hand.length > 0 ? this.renderHand() : "Wait to be dealt your hand"} */}
           Stack: {parseFloat(this.props.stack).toFixed(2)}
           <br/>
           In Pot: {parseFloat(this.props.inPot).toFixed(2)}

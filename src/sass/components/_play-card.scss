@@ -1,3 +1,15 @@
 .card-front {
-  height: 40rem;
+  height: 30rem;
+  width: 20rem;
+  box-shadow: 0 2rem 4rem rgba(0,0,0,.7);
+  border-radius: 5px;
+  position: relative;
+  background-color: white;
+
+  &__number {
+    position: absolute;
+    // top: .5rem;
+    left: 1rem;
+    font-size: 4.5rem;
+  }
 }

@@ -74,6 +74,7 @@ class Round extends Component {
     action: 0,
     actionID: 0,
     currBet: 0,
+    playas:[],
     0: "player__waiting",
     1: "player__waiting",
     2: "player__waiting",
@@ -107,18 +108,26 @@ class Round extends Component {
     return game
   }
 
-  async getPlayer() {
-    let player;
-   await db.collection("tables").doc(localStorage.getItem("table")).collection(localStorage.getItem("player")).get().then(doc => {
-      player = doc
+  async getPlayers() {
+    
+   await db.collection("tables").doc(localStorage.getItem("table")).collection("players").get().then(doc => {
+     const playerDocs = []
+     doc.forEach(d => {
+       console.log(d.data())
+       playerDocs.push(d.data())
+     })
+     this.setState({
+       players: playerDocs
+     }, () => console.log(this.state.players))
     })
-    return player
+
   }
 
 
 
 
   async startRound() {
+    await this.getPlayers()
     await this.getGame()
     // Shuffle the Deck
     // this.shuffle(this.state.deck)
@@ -131,8 +140,8 @@ class Round extends Component {
     // Add blinds
     this.payBlinds()
     // Deal one card to each player, then repeat
-    // this.dealCard()
-    // this.dealCard()
+    this.dealCard()
+    this.dealCard()
     // Set the action on a specific player
     this.whosTurn(null)
     // Store the first player to act so we know when to deal the flop
@@ -306,13 +315,13 @@ whosTurn(id) {
       console.log(game)
     })
 
-    this.getPlayer({dealer: true}).then(player => {
-      console.log(player)
+    this.getPlayers().then(player => {
+      // console.log(player)
     })
 
-    for (let i = 0; i < this.state.players.length; i++) {
-      this.state.players[i].hand.push(this.state.deck.pop())
-    }
+    // for (let i = 0; i < this.state.players.length; i++) {
+    //   this.state.players[i].hand.push(this.state.deck.pop())
+    // }
   }
 
 
@@ -405,8 +414,10 @@ whosTurn(id) {
 
   render() {
     return (
-      <div>
-        <CardFront/>
+      <div className="round">
+        {/* <div style={{"margin": "4rem 2rem"}}>
+        <CardFront number="8" color="rgba(255,10,10)"/>
+        </div> */}
         Action on player &nbsp;
         {this.state.action}
         <h3>Pot:</h3>

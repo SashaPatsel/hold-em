@@ -118,7 +118,16 @@ body {
   border-radius: 5px; }
 
 .card-front {
-  height: 40rem; }
+  height: 30rem;
+  width: 20rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  position: relative;
+  background-color: white; }
+  .card-front__number {
+    position: absolute;
+    left: 1rem;
+    font-size: 4.5rem; }
 
 .player__action {
   background-color: orangered; }
@@ -134,3 +143,7 @@ body {
 
 .landing {
   font-size: 2rem; }
+
+.round {
+  height: 100vh;
+  background-color: green; }
