@@ -57,6 +57,8 @@ const players = [
 ]
 
 
+
+
 class Round extends Component {
   state = {
     deck: this.props.deck,
@@ -75,6 +77,7 @@ class Round extends Component {
     actionID: 0,
     currBet: 0,
     playas:[],
+    update: "",
     0: "player__waiting",
     1: "player__waiting",
     2: "player__waiting",
@@ -92,11 +95,16 @@ class Round extends Component {
 
 
 
-  componentWillMount() {
+  componentDidMount() {
 
 
     this.startRound()
     console.log("Round", this.state)
+    
+    
+    db.collection("tables").doc(localStorage.getItem("table")).collection("players").onSnapshot(doc => {
+      this.getPlayers()
+    })
 
   }
 
@@ -112,6 +120,7 @@ class Round extends Component {
     
    await db.collection("tables").doc(localStorage.getItem("table")).collection("players").get().then(doc => {
      const playerDocs = []
+     console.log(doc)
      doc.forEach(d => {
       //  Make copy to add new key of docRef
        const obj = d.data()
@@ -119,9 +128,18 @@ class Round extends Component {
        playerDocs.push(obj)
      })
      this.setState({
-       players: playerDocs
-     }, () => console.log(this.state.players))
+       players: []
+     }, () => {
+       console.log(this.state.players)
+      this.setState({
+        players: playerDocs
+      }, () => console.log(this.state.players))
+      })
     })
+
+  }
+
+  getNewPlayers() {
 
   }
 
@@ -444,7 +462,12 @@ whosTurn(id) {
   }
 
 
+  
+
   render() {
+
+
+
     return (
       <div className="round">
         {/* <div style={{"margin": "4rem 2rem"}}>

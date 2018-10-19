@@ -46,8 +46,7 @@ class Create extends Component {
       public: this.state.public,
       minBuyIn: this.state.minBuyIn,
       maxBuyIn: this.state.maxPlayers,
-      deck: deck,
-      players: []
+      deck: deck
   })
   .then(function(docRef) {
       console.log(" docRef", docRef.id);
